@@ -1,0 +1,12 @@
+[Unit]
+Description=ESP32-C6 WiFi wpa_supplicant
+After=esp32-c6-init.service
+Wants=esp32-c6-init.service
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sh -c "for i in $(seq 1 10); do /sbin/ip link show wlan0 >/dev/null 2>&1 && exit 0; sleep 1; done; exit 1"
+ExecStart=/usr/sbin/wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf
+
+[Install]
+WantedBy=multi-user.target

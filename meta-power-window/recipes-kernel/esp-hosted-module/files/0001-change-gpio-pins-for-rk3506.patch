@@ -1,0 +1,28 @@
+From 3d0239a399157b3d34376405693aceb2272493da Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Lars=20G=C3=B6rner?= <lgoerner@hotmail.de>
+Date: Fri, 26 Jun 2026 05:55:48 +0200
+Subject: [PATCH] change gpio pins for rk3506
+
+---
+ spi/esp_spi.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/spi/esp_spi.h b/spi/esp_spi.h
+index 7ce272ce..107a7026 100644
+--- a/spi/esp_spi.h
++++ b/spi/esp_spi.h
+@@ -9,9 +9,9 @@
+ 
+ #include "esp.h"
+ 
+-#define HANDSHAKE_PIN           22
++#define HANDSHAKE_PIN           10
+ #define SPI_IRQ                 gpio_to_irq(HANDSHAKE_PIN)
+-#define SPI_DATA_READY_PIN      27
++#define SPI_DATA_READY_PIN      9
+ #define SPI_DATA_READY_IRQ      gpio_to_irq(SPI_DATA_READY_PIN)
+ #define SPI_BUF_SIZE            1600
+ 
+-- 
+2.43.0
+

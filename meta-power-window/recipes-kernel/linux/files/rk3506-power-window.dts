@@ -1,0 +1,97 @@
+/*
+ * Based on rk3506g-evb1-v10.dts (https://github.com/rockchip-linux/kernel)
+ */
+
+/dts-v1/;
+#include "rk3506.dtsi"
+#include "rk3506-power-window.dtsi"
+
+/ {
+    model = "Power Window (RK3506G2 + Waveshare 5-DSI-TOUCH-A)";
+    compatible = "power-window", "rockchip,rk3506";
+
+    chosen {
+        bootargs = "earlycon=uart8250,mmio32,0xff0a0000 console=ttyFIQ0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait panic=10 clk_ignore_unused";
+    };
+
+    extcon_usb: extcon-usb {
+        compatible = "linux,extcon-usb-gpio";
+        status = "okay";
+        vbus-gpio = <&gpio1 RK_PC5 GPIO_ACTIVE_LOW>;
+        pinctrl-0 = <&usb_extcon_vbus>;
+        pinctrl-names = "default";
+    };
+
+    vcc3v3_lcd_n: vcc3v3-lcd0-n {
+        compatible = "regulator-fixed";
+        enable-active-high;
+        gpio = <&gpio0 RK_PA1 GPIO_ACTIVE_HIGH>;
+        regulator-name = "vcc3v3_lcd_n";
+        regulator-boot-on;
+        regulator-state-mem {
+            regulator-off-in-suspend;
+        };
+    };
+
+    vcc5v0_otg0: vcc5v0-otg0-regulator {
+        compatible = "regulator-fixed";
+        regulator-name = "vcc5v0_otg0";
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        enable-active-high;
+        gpio = <&gpio1 RK_PC4 GPIO_ACTIVE_HIGH>;
+        vin-supply = <&vcc_sys>;
+        pinctrl-0 = <&vcc5v0_otg0_en>;
+        pinctrl-names = "default";
+    };
+
+    vcc5v0_otg1: vcc5v0-otg1-regulator {
+        compatible = "regulator-fixed";
+        regulator-name = "vcc5v0_otg1";
+        regulator-boot-on;
+        regulator-always-on;
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        enable-active-high;
+        gpio = <&gpio1 RK_PD0 GPIO_ACTIVE_HIGH>;
+        vin-supply = <&vcc_sys>;
+        pinctrl-0 = <&vcc5v0_otg1_en>;
+        pinctrl-names = "default";
+    };
+};
+
+/* == DISPLAY =============================================================== */
+
+&cma { status = "okay"; };
+&dsi { status = "okay"; };
+&dsi_dphy { status = "okay"; };
+&dsi_in_vop { status = "okay"; };
+&dsi_panel { power-supply = <&vcc3v3_lcd_n>; };
+&route_dsi { status = "okay"; };
+
+/* == ESP32-C6 ============================================================== */
+
+&spi0 {
+    status = "okay";
+    pinctrl-0 = <&rm_io7_spi0_clk &rm_io6_spi0_mosi &rm_io5_spi0_miso>;
+    pinctrl-names = "default";
+    cs-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_LOW>;
+};
+
+/* == USB =================================================================== */
+
+&u2phy_otg0 {
+    status = "okay";
+    vbus-supply = <&vcc5v0_otg0>;
+    rockchip,gpio-vbus-det;
+};
+
+&u2phy_otg1 {
+    status = "okay";
+    vbus-supply = <&vcc5v0_otg1>;
+};
+
+&usb2phy {
+    status = "okay";
+    extcon = <&extcon_usb>;
+};

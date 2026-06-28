@@ -1,0 +1,13 @@
+[Unit]
+Description=ESP32-C6 DHCP client
+After=esp32-c6-wpa.service
+BindsTo=esp32-c6-wpa.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "for i in $(seq 1 10); do /sbin/ip link show wlan0 >/dev/null 2>&1 && break; sleep 1; done; \
+                      /sbin/ip link set wlan0 up && /usr/sbin/udhcpc -i wlan0 -b"
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

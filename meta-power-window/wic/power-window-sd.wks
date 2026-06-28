@@ -1,0 +1,26 @@
+# Rockchip RK3506 eMMC partition layout for wic.
+#
+# Boot chain: BootROM loads idbloader.img from sector 64 (32 KiB offset).
+# idbloader initialises DDR and loads U-Boot from the uboot partition.
+# U-Boot loads the kernel from the boot partition via extlinux.conf.
+#
+# Layout (512-byte sectors). Matches the reference Core3506 BSP
+# (validated 2026-04-10). Offsets tied to U-Boot's compile-time
+# CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR (0x4000 → 8 MiB), so the
+# vendor Lyra Ultra W `parameter.txt` (which pins uboot at 4 MiB /
+# boot at 8 MiB) is INTENTIONALLY different — that image's SPL was
+# built with a different MMC offset.
+#
+#   Sector 0x0000       : MBR / partition table
+#   Sector 0x0040 (32K) : idbloader.img (DDR init + SPL)
+#   Sector 0x4000 (8M)  : u-boot.img (U-Boot + OP-TEE FIT)
+#   Sector 0x8000 (16M) : boot partition (kernel + DTB + extlinux)
+#   Sector 0xC000 (24M) : rootfs partition (fills remaining space)
+
+part --source rawcopy --sourceparams="file=idbloader.img" --no-table --align 32
+part --source rawcopy --sourceparams="file=u-boot.img"   --no-table --align 8192
+
+bootloader --configfile=extlinux-rk3506.conf
+part /boot --source bootimg-partition --sourceparams="loader=u-boot" --fstype=vfat --label boot --align 16384 --size 64 --active
+
+part / --source rootfs --fstype=ext4 --label rootfs --align 24576

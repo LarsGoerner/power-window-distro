@@ -1,0 +1,11 @@
+[Unit]
+Description=ESP32-C6 SPI Hosted module
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/modprobe esp32_spi resetpin=8 clockspeed=20
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

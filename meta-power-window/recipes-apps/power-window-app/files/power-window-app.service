@@ -1,0 +1,11 @@
+[Unit]
+Description=Power Window App
+
+[Service]
+ExecStartPre=/usr/bin/systemctl stop psplash-start.service
+ExecStart=/usr/bin/power-window-app
+Restart=on-failure
+Environment=QT_QPA_PLATFORM=linuxfb:fb=/dev/fb0:rotate=90 QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS=/dev/input/event0:rotate=90 OWM_API_KEY=60a72cd7cacc7d341a916beeb047f826
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+.vscode/
+build/
+meta-openembedded/
+meta-qt5/
+poky/

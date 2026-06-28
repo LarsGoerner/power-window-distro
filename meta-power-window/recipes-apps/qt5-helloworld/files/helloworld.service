@@ -1,0 +1,11 @@
+[Unit]
+Description=Qt5 Test App
+
+[Service]
+ExecStartPre=/usr/bin/systemctl stop psplash-start.service
+ExecStart=/usr/bin/qt5-helloworld
+Restart=on-failure
+Environment=QT_QPA_PLATFORM=linuxfb:fb=/dev/fb0:rotate=90 QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS=/dev/input/event0:rotate=90
+
+[Install]
+WantedBy=multi-user.target

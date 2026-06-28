@@ -1,0 +1,57 @@
+
+#include <dt-bindings/pinctrl/rockchip.h>
+#include "rockchip-pinconf.dtsi"
+
+&pinctrl {
+    gpio-keys {
+        key_wake_up: key-wake-up {
+            rockchip,pins = <0 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+
+    /* DISPLAY */
+    rm_io0 {
+        rm_io0_i2c2_sda: rm-io0-i2c2-sda {
+            rockchip,pins = <0 RK_PA0 35 &pcfg_pull_up>;
+        };
+    };
+
+    rm_io1 {
+        rm_io1_i2c2_scl: rm-io1-i2c2-scl {
+            rockchip,pins = <0 RK_PA1 34 &pcfg_pull_up>;
+        };
+    };
+
+    /* SDMMC */
+    sdmmc {
+        /omit-if-no-ref/
+        sdmmc_pwren: sdmmc-pwren {
+            rockchip,pins = <1 RK_PB7 RK_FUNC_GPIO &pcfg_pull_down>;
+        };
+
+        sdmmc_det: sdmmc-det {
+            rockchip,pins = <1 RK_PB6 RK_FUNC_GPIO &pcfg_pull_up>;
+        };
+    };
+
+    tsadc {
+        wdt_tsadc_gpio: wdt-tsadc-gpio {
+            rockchip,pins = <0 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+
+    /* USB */
+    usb {
+        usb_extcon_vbus: usb-extcon-vbus {
+            rockchip,pins = <1 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+
+        vcc5v0_otg0_en: vcc5v0-otg0-en {
+            rockchip,pins = <1 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+
+        vcc5v0_otg1_en: vcc5v0-otg1-en {
+            rockchip,pins = <1 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+};

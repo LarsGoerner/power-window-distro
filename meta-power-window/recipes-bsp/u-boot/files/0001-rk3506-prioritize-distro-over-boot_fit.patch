@@ -1,0 +1,28 @@
+From 30df3d45eeb0d974c5447245f8229c9898def2cc Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Lars=20G=C3=B6rner?= <lgoerner@hotmail.de>
+Date: Sun, 21 Jun 2026 09:00:49 +0200
+Subject: [PATCH] rk3506: prioritize distro over boot_fit
+
+---
+ include/configs/rk3506_common.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/configs/rk3506_common.h b/include/configs/rk3506_common.h
+index db22b34b12..7458d0390e 100644
+--- a/include/configs/rk3506_common.h
++++ b/include/configs/rk3506_common.h
+@@ -83,9 +83,11 @@
+ #undef RKIMG_BOOTCOMMAND
+ #ifdef CONFIG_FIT_SIGNATURE
+ #define RKIMG_BOOTCOMMAND		\
++	"run distro_bootcmd;" \
+ 	"boot_fit;"
+ #else
+ #define RKIMG_BOOTCOMMAND		\
++	"run distro_bootcmd;" \
+ 	"boot_fit;"			\
+ 	"boot_android ${devtype} ${devnum};"
+ #endif
+-- 
+2.43.0
+
