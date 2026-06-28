@@ -36,14 +36,25 @@ IMAGE_INSTALL += "ttf-dejavu-sans"
 IMAGE_INSTALL += "power-window-app"
 
 # USER SETTINGS
+ROOT_PASSWORD ?= "powerwindow"
+ROOT_PASSWORD_HASH ??= ""
 ROOTFS_POSTPROCESS_COMMAND += "set_root_password;"
 set_root_password() {
-    python3 -c "
-import crypt, sys
-pw = crypt.crypt('powerwindow', crypt.mksalt(crypt.METHOD_SHA512))
-with open(sys.argv[1] + '/etc/shadow') as f:
+        if [ -n "${ROOT_PASSWORD_HASH}" ]; then
+                hashed="${ROOT_PASSWORD_HASH}"
+        else
+                hashed=$(python3 -c "import crypt; print(crypt.crypt('${ROOT_PASSWORD}', crypt.mksalt(crypt.METHOD_SHA512)))")
+                if [ "${ROOT_PASSWORD}" = "powerwindow" ]; then
+                        bbwarn "ROOT_PASSWORD is set to the default value. Better use a custom password for production builds."
+                fi
+        fi
+        python3 -c "
+import sys
+pw = sys.argv[1]
+rootfs = sys.argv[2]
+with open(rootfs + '/etc/shadow') as f:
 	data = f.read()
-with open(sys.argv[1] + '/etc/shadow', 'w') as f:
+with open(rootfs + '/etc/shadow', 'w') as f:
 	for line in data.splitlines(True):
 		if line.startswith('root:'):
 			parts = line.split(':')
@@ -51,7 +62,7 @@ with open(sys.argv[1] + '/etc/shadow', 'w') as f:
 			f.write(':'.join(parts))
 		else:
 			f.write(line)
-" ${IMAGE_ROOTFS}
+" "${hashed}" ${IMAGE_ROOTFS}
 }
 
 ROOTFS_POSTPROCESS_COMMAND += "copy_fonts_to_lib;"

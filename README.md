@@ -137,12 +137,17 @@ git commit -m "<commit message>"
 git format-patch HEAD~1
 ```
 
-## Update Package Index
+## Change the root PSK
 
-Needed for opkg package updates
+To change the the password for the root user the *ROOT_PASSWORD* variable can be
+used in local.conf.
+```ini
+ROOT_PASSWORD = "<PLAIN-TEXT-PASSWORD>"
+```
 
-```bash
-kas shell kas-project.yml -c "bitbake package-index"
+Alternatively the ROOT_PASSWORD_HASH can be used instead for a pre-hashed password.
+```ini
+ROOT_PASSWORD_HASH = "<HASHED-PASSWORD>"
 ```
 
 ## Usefull Links
