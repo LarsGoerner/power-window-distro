@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QList>
 
 class KeyboardWidget : public QWidget
 {
@@ -11,9 +12,10 @@ class KeyboardWidget : public QWidget
 public:
         explicit KeyboardWidget(QWidget * parent = nullptr);
         void attachInput(QLineEdit * input);
+        QLineEdit * currentInput() const;
 
 private:
-        QLineEdit * mAttachedInput = nullptr;
+        QList<QLineEdit *> mAttachedInputs;
         QList<QPushButton *> mKeyButtons;
         QStringList mKeys;
         bool mShift = false;

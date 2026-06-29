@@ -110,9 +110,18 @@ KeyboardWidget::KeyboardWidget(QWidget * parent) : QWidget(parent)
 
 void KeyboardWidget::attachInput(QLineEdit * input)
 {
-        mAttachedInput = input;
-        connect(static_cast<QApplication *>(QApplication::instance()),
-                &QApplication::focusChanged, this, &KeyboardWidget::onFocusChanged);
+        mAttachedInputs.append(input);
+        if (mAttachedInputs.size() == 1) {
+                connect(static_cast<QApplication *>(QApplication::instance()),
+                        &QApplication::focusChanged, this, &KeyboardWidget::onFocusChanged);
+        }
+}
+
+QLineEdit * KeyboardWidget::currentInput() const
+{
+        QWidget * focused = QApplication::focusWidget();
+        for (QLineEdit * input : mAttachedInputs) { if (input == focused) { return input; } }
+        return mAttachedInputs.isEmpty() ? nullptr : mAttachedInputs.last();
 }
 
 QPushButton * KeyboardWidget::makeKey(int index)
@@ -157,12 +166,13 @@ void KeyboardWidget::setKeyText(int idx, const QString & text)
 
 void KeyboardWidget::onKeyClicked(int index)
 {
-        if (!mAttachedInput) { return; }
+        QLineEdit * input = currentInput();
+        if (!input) { return; }
 
         if (index == KEY_SHIFT_IDX) { onShiftClicked(); return; }
         if (index == KEY_BACK_IDX) { onBackspaceClicked(); return; }
         if (index == KEY_OK_IDX) { onDoneClicked(); return; }
-        if (index == KEY_SPACE_IDX) { mAttachedInput->insert(" "); return; }
+        if (index == KEY_SPACE_IDX) { input->insert(" "); return; }
 
         if (index == KEY_NUM_MODE_IDX) {
                 mNumericMode = !mNumericMode;
@@ -179,7 +189,7 @@ void KeyboardWidget::onKeyClicked(int index)
                 return;
         }
 
-        mAttachedInput->insert(mKeyButtons[index]->text());
+        input->insert(mKeyButtons[index]->text());
         if (mShift) { onShiftClicked(); }
 }
 
@@ -191,17 +201,19 @@ void KeyboardWidget::onShiftClicked()
 
 void KeyboardWidget::onBackspaceClicked()
 {
-        if (mAttachedInput) mAttachedInput->backspace();
+        QLineEdit * input = currentInput();
+        if (input) input->backspace();
 }
 
 void KeyboardWidget::onDoneClicked()
 {
-        mAttachedInput->clearFocus();
+        QLineEdit * input = currentInput();
+        if (input) input->clearFocus();
         hide();
 }
 
 void KeyboardWidget::onFocusChanged(QWidget * old, QWidget * now)
 {
         Q_UNUSED(old);
-        setVisible(now == mAttachedInput);
+        setVisible(mAttachedInputs.contains(qobject_cast<QLineEdit *>(now)));
 }
