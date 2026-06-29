@@ -28,7 +28,7 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
 
         // TITLE
         QLabel * title = new QLabel("Einstellungen", this);
-        title->setStyleSheet("font-size: 28px; font-weight: bold;");
+        title->setObjectName("windowTitle");
         title->setAlignment(Qt::AlignCenter);
         mainLayout->addWidget(title);
 
@@ -38,7 +38,6 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         mTabBar->addTab("WiFi");
         mTabBar->addTab("Growatt");
         mTabBar->addTab("Update");
-        mTabBar->setStyleSheet("QTabBar::tab { height: 40px; padding: 0px 20px; }");
         mainLayout->addWidget(mTabBar);
 
         // SETTING VIEWS CONTAINER
@@ -51,7 +50,7 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         displayLayout->setSpacing(15);
 
         QLabel * blBrightnessLabel = new QLabel("Helligkeit", displayView);
-        blBrightnessLabel->setStyleSheet("font-weight: bold;");
+        blBrightnessLabel->setObjectName("sectionTitle");
         displayLayout->addWidget(blBrightnessLabel);
 
         mBrightnessDial = new QDial(displayView);
@@ -66,39 +65,32 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         // WIFI CONFIG VIEW
         QWidget * wifiView = new QWidget(this);
         QVBoxLayout * wifiLayout = new QVBoxLayout(wifiView);
-        wifiLayout->setContentsMargins(20, 20, 20, 20);
-        wifiLayout->setSpacing(15);
 
         QLabel * wifiLabel = new QLabel("WiFi Einstellungen", wifiView);
         wifiLabel->setStyleSheet("font-weight: bold;");
         wifiLayout->addWidget(wifiLabel);
 
         mScanButton = new QPushButton("Scannen", wifiView);
-        mScanButton->setFixedHeight(45);
-        mScanButton->setStyleSheet("background-color: green; font-weight: bold; border-radius: 5px;");
+        mScanButton->setObjectName("scanButton");
         wifiLayout->addWidget(mScanButton);
 
         mSsidCombo = new QComboBox(wifiView);
-        mSsidCombo->setFixedHeight(45);
+        mSsidCombo->setObjectName("ssidCombo");
         mSsidCombo->setPlaceholderText("-- Netzwerk auswählen --");
-        mSsidCombo->setStyleSheet("background-color: green; font-weight: bold; border-radius: 5px;");
         wifiLayout->addWidget(mSsidCombo);
 
         mPasswordInput = new QLineEdit(wifiView);
+        mPasswordInput->setObjectName("passwordInput");
         mPasswordInput->setPlaceholderText("Passwort");
         mPasswordInput->setEchoMode(QLineEdit::Password);
-        mPasswordInput->setFixedHeight(45);
-        mPasswordInput->setStyleSheet("background-color: darkBlue; border: 1px solid gray; padding-left: 10px; border-radius: 5px;");
         wifiLayout->addWidget(mPasswordInput);
 
         mWifiConnectButton = new QPushButton("Verbinden", wifiView);
-        mWifiConnectButton->setFixedHeight(45);
-        mWifiConnectButton->setStyleSheet("background-color: green; font-weight: bold; border-radius: 5px;");
+        mWifiConnectButton->setObjectName("wifiConnectButton");
         wifiLayout->addWidget(mWifiConnectButton);
 
         mWifiStatusLabel = new QLabel("", wifiView);
-        mWifiStatusLabel->setFixedHeight(45);
-        mWifiStatusLabel->setStyleSheet("background-color: green; font-weight: bold; border-radius: 5px;");
+        mWifiStatusLabel->setObjectName("wifiStatusLabel");
         wifiLayout->addWidget(mWifiStatusLabel);
 
         mSetViewContainer->addWidget(wifiView);
@@ -106,24 +98,23 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         // GROWATT SETTINGS VIEW
         QWidget * growattView = new QWidget(this);
         QVBoxLayout * growattLayout = new QVBoxLayout(growattView);
-        growattLayout->setContentsMargins(20, 20, 20, 20);
-        growattLayout->setSpacing(12);
 
         QLabel * growattLabel = new QLabel("Growatt Konto", growattView);
         growattLayout->addWidget(growattLabel);
 
         mGrowattUsernameInput = new QLineEdit(growattView);
+        mGrowattUsernameInput->setObjectName("growattUsernameInput");
         mGrowattUsernameInput->setPlaceholderText("Benutzername (E-Mail)");
-        mGrowattUsernameInput->setFixedHeight(45);
         growattLayout->addWidget(mGrowattUsernameInput);
 
         mGrowattPasswordInput = new QLineEdit(growattView);
+        mGrowattPasswordInput->setObjectName("growattPasswordInput");
         mGrowattPasswordInput->setPlaceholderText("Passwort");
         mGrowattPasswordInput->setEchoMode(QLineEdit::Password);
-        mGrowattPasswordInput->setFixedHeight(45);
         growattLayout->addWidget(mGrowattPasswordInput);
 
         mGrowattServerCombo = new QComboBox(growattView);
+        mGrowattServerCombo->setObjectName("growattServerCombo");
         mGrowattServerCombo->addItem("Europa / Welt (OpenAPI)", "https://openapi.growatt.com");
         mGrowattServerCombo->addItem("China (OpenAPI)", "https://openapi-cn.growatt.com");
         mGrowattServerCombo->addItem("Nordamerika (OpenAPI)", "https://openapi-us.growatt.com");
@@ -132,21 +123,22 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         growattLayout->addWidget(mGrowattServerCombo);
 
         mGrowattPlantCombo = new QComboBox(growattView);
+        mGrowattPlantCombo->setObjectName("growattPlantCombo");
         mGrowattPlantCombo->setPlaceholderText("-- Kraftwerk wählen --");
         growattLayout->addWidget(mGrowattPlantCombo);
 
         mGrowattStatusLabel = new QLabel("", growattView);
-        mGrowattStatusLabel->setFixedHeight(45);
+        mGrowattStatusLabel->setObjectName("growattStatusLabel");
         growattLayout->addWidget(mGrowattStatusLabel);
 
         QHBoxLayout * growattBtnRow = new QHBoxLayout(growattView);
 
         mGrowattConnectBtn = new QPushButton("Verbinden", growattView);
-        mGrowattConnectBtn->setFixedHeight(45);
+        mGrowattConnectBtn->setObjectName("growattConnectButton");
         growattBtnRow->addWidget(mGrowattConnectBtn);
 
         mGrowattClearBtn = new QPushButton("Löschen", growattView);
-        mGrowattClearBtn->setFixedHeight(45);
+        mGrowattClearBtn->setObjectName("growattClearButton");
         growattBtnRow->addWidget(mGrowattClearBtn);
 
         growattLayout->addLayout(growattBtnRow);
@@ -156,21 +148,18 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         // UPDATE VIEW
         QWidget * updateView = new QWidget(this);
         QVBoxLayout * updateLayout = new QVBoxLayout(updateView);
-        updateLayout->setContentsMargins(20, 20, 20, 20);
-        updateLayout->setSpacing(15);
 
         QLabel * updateLabel = new QLabel("Software Update", updateView);
-        updateLabel->setStyleSheet("font-weight: bold;");
+        updateLabel->setObjectName("updateLabel");
         updateLayout->addWidget(updateLabel);
 
         mUpdateButton = new QPushButton("Update starten", updateView);
-        mUpdateButton->setFixedHeight(45);
-        mUpdateButton->setStyleSheet("background-color: green; font-weight: bold; border-radius: 5px;");
+        mUpdateButton->setObjectName("updateButton");
         updateLayout->addWidget(mUpdateButton);
 
         mUpdateOutput = new QTextEdit(updateView);
         mUpdateOutput->setReadOnly(true);
-        mUpdateOutput->setStyleSheet("background-color: darkBlue, color: green; font-family: monospace; border: 1px solid gray; border-radius: 5px; padding: 10px");
+        mUpdateOutput->setObjectName("updateOutput");
         updateLayout->addWidget(mUpdateOutput, 1);
 
         updateLayout->addStretch();
@@ -260,11 +249,13 @@ void SettingsWindow::onScanResultsReady()
 
                 if (mSsidCombo->count() <= 1) {
                         mWifiStatusLabel->setText("Keine Netzwerke gefunden");
-                        mWifiStatusLabel->setStyleSheet("Qlabel { background-color: yellow; color: black; }");
+                        mWifiStatusLabel->setProperty("status", "warning");
                 } else {
                         mWifiStatusLabel->setText("Scan erfolgreich");
-                        mWifiStatusLabel->setStyleSheet("Qlabel { background-color: green; color: black; }");
+                        mWifiStatusLabel->setProperty("status", "ok");
                 }
+                mWifiStatusLabel->style()->unpolish(mWifiStatusLabel);
+                mWifiStatusLabel->style()->polish(mWifiStatusLabel);
                 mWifiProcess->deleteLater();
                 mWifiProcess = nullptr;
         });
@@ -277,12 +268,16 @@ void SettingsWindow::onWifiConnectClicked()
         QString psk = mPasswordInput->text();
         if (ssid.isEmpty() || ssid.startsWith("--")) {
                 mWifiStatusLabel->setText("Kein Netwerk ausgewählt");
-                mWifiStatusLabel->setStyleSheet("QLabel { background-color: yellow; color: black; }");
+                mWifiStatusLabel->setProperty("status", "warning");
+                mWifiStatusLabel->style()->unpolish(mWifiStatusLabel);
+                mWifiStatusLabel->style()->polish(mWifiStatusLabel);
                 return;
         }
         if (psk.isEmpty()) {
                 mWifiStatusLabel->setText("Kein Passwork eingegeben");
-                mWifiStatusLabel->setStyleSheet("QLabel { background-color: yellow; color: black; }");
+                mWifiStatusLabel->setProperty("status", "warning");
+                mWifiStatusLabel->style()->unpolish(mWifiStatusLabel);
+                mWifiStatusLabel->style()->polish(mWifiStatusLabel);
                 return;
         }
 
@@ -306,11 +301,13 @@ void SettingsWindow::onWifiConnectClicked()
         {
                 if (code == 0) {
                         mWifiStatusLabel->setText("Verbunden");
-                        mWifiStatusLabel->setStyleSheet("QLabel { background-color: green; color: black; }");
+                        mWifiStatusLabel->setProperty("status", "ok");
                 } else {
                         mWifiStatusLabel->setText("Verbindung fehlgeschlagen");
-                        mWifiStatusLabel->setStyleSheet("QLabel { background-color: red; color: white; }");
+                        mWifiStatusLabel->setProperty("status", "error");
                 }
+                mWifiStatusLabel->style()->unpolish(mWifiStatusLabel);
+                mWifiStatusLabel->style()->polish(mWifiStatusLabel);
                 mWifiConnectButton->setEnabled(true);
                 mWifiConnectButton->setText("Verbinden");
                 mWifiProcess->deleteLater();
@@ -384,16 +381,30 @@ void SettingsWindow::onGrowattClearClicked()
         mGrowattPasswordInput->clear();
         mGrowattPlantCombo->clear();
         mGrowattStatusLabel->setText("Zugangsdaten gelöscht");
-        mGrowattStatusLabel->setStyleSheet(
-                "QLabel {background-color: yellow; color: black; border-radius: 5px;}");
+        mGrowattStatusLabel->setProperty("status", "warning");
+        mGrowattStatusLabel->style()->unpolish(mGrowattStatusLabel);
+        mGrowattStatusLabel->style()->polish(mGrowattStatusLabel);
 }
 
-void SettingsWindow::setGrowattStatus(const QString &text, const QString &color)
+void SettingsWindow::setGrowattStatus(const QString &text, ConnectionStatus status)
 {
         mGrowattStatusLabel->setText(text);
-        mGrowattStatusLabel->setStyleSheet(
-                QString("QLabel { background-color: %1; color: black; border-radius: 5px; }")
-                .arg(color));
+
+        switch (status) {
+        case ConnectionStatus::OK:
+                mGrowattStatusLabel->setProperty("status", "ok");
+                break;
+        case ConnectionStatus::WARNING:
+                mGrowattStatusLabel->setProperty("status", "ok");
+                break;
+        case ConnectionStatus::ERROR:
+                mGrowattStatusLabel->setProperty("status", "ok");
+                break;
+        default:
+                break;
+        }
+        mGrowattStatusLabel->style()->unpolish(mGrowattStatusLabel);
+        mGrowattStatusLabel->style()->polish(mGrowattStatusLabel);
 }
 
 void SettingsWindow::populateGrowattPlants(const QJsonArray &plants)

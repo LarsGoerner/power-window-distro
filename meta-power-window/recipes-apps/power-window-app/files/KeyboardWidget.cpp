@@ -44,9 +44,7 @@ KeyboardWidget::KeyboardWidget(QWidget * parent) : QWidget(parent)
                 // SHIFT
                 QPushButton * btn = makeKey(KEY_SHIFT_IDX);
                 btn->setText("^");
-                btn->setStyleSheet("background-color: gray; font-weight: bold; "
-                                   "font-size: 18px; border-radius: 5px; "
-                                   "min-width: 55px; min-height: 45px;");
+                btn->setObjectName("keyShift");
                 row3->addWidget(btn);
         }
         for (int i = KEY_ROW3_START_IDX; i < KEY_ROW3_END_IDX; i++) {
@@ -57,9 +55,7 @@ KeyboardWidget::KeyboardWidget(QWidget * parent) : QWidget(parent)
                 // BACK
                 QPushButton * btn = makeKey(KEY_BACK_IDX);
                 btn->setText("<");
-                btn->setStyleSheet("background-color: red; font-weight: bold; "
-                                   "font-size: 18px; border-radius: 5px; "
-                                   "min-width: 55px; min-height: 45px;");
+                btn->setObjectName("keyBack");
                 row3->addWidget(btn);
         }
         mainLayout->addLayout(row3);
@@ -71,35 +67,27 @@ KeyboardWidget::KeyboardWidget(QWidget * parent) : QWidget(parent)
         {
                 // [123]
                 QPushButton * btn = makeKey(KEY_NUM_MODE_IDX);
-                btn->setStyleSheet("background-color: gray; font-weight: bold; "
-                                   "font-size: 18px; border-radius: 5px; "
-                                   "min-width: 55px; min-height: 45px;");
+                btn->setObjectName("keyNum");
                 row4->addWidget(btn);
         }
         {
                 // [ÄÖÜ]
                 QPushButton * btn = makeKey(KEY_SPEC_MODE_IDX);
-                btn->setStyleSheet("background-color: gray; font-weight: bold; "
-                                   "font-size: 18px; border-radius: 5px; "
-                                   "min-width: 55px; min-height: 45px;");
+                btn->setObjectName("keySpec");
                 row4->addWidget(btn);
         }
         {
                 // SPACE
                 QPushButton * btn = makeKey(KEY_SPACE_IDX);
                 btn->setText("_");
-                btn->setStyleSheet("background-color: gray; font-weight: bold; "
-                                   "font-size: 18px; border-radius: 5px; "
-                                   "min-width: 55px; min-height: 45px;");
+                btn->setObjectName("keySpace");
                 row4->addWidget(btn);
         }
         {
                 // OK
                 QPushButton * btn = makeKey(KEY_OK_IDX);
                 btn->setText("OK");
-                btn->setStyleSheet("background-color: green; font-weight: bold; "
-                                   "font-size: 18px; border-radius: 5px; "
-                                   "min-width: 55px; min-height: 45px;");
+                btn->setObjectName("keyOK");
                 row4->addWidget(btn);
         }
         row4->addStretch();
@@ -128,8 +116,7 @@ QPushButton * KeyboardWidget::makeKey(int index)
 {
         QPushButton * btn = new QPushButton("", this);
         btn->setFocusPolicy(Qt::NoFocus);
-        btn->setStyleSheet("background-color: darkBlue; color: white; font-size: 18px; "
-                           "border-radius: 5px; min-width: 50px, min-height: 45px;");
+        btn->setObjectName("keyDefault");
         connect(btn, &QPushButton::clicked, this, [this, index]() { onKeyClicked(index); });
         mKeyButtons.append(btn);
         return btn;

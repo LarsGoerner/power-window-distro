@@ -26,7 +26,7 @@ WeatherWindow::WeatherWindow(QWidget * parent) : BaseWindow(parent)
 
         // CURRENT WEATHER CARD
         QWidget * card = new QWidget(this);
-        card->setStyleSheet("background-color: darkBlue; border-radius: 10px; padding: 8px;");
+        card->setObjectName("weatherCard");
         QHBoxLayout * cardLayout = new QHBoxLayout(card);
         cardLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -35,10 +35,10 @@ WeatherWindow::WeatherWindow(QWidget * parent) : BaseWindow(parent)
         mIconLabel->setFixedSize(64, 64);
         leftCol->addWidget(mIconLabel, 0, Qt::AlignTop);
         mCityLabel = new QLabel("--", card);
-        mCityLabel->setStyleSheet("font-size: 18px; font-weight: bold;");
+        mCityLabel->setObjectName("cityLabel");
         leftCol->addWidget(mCityLabel);
         mDescLabel = new QLabel("", card);
-        mDescLabel->setStyleSheet("font-size: 14px;");
+        mDescLabel->setObjectName("descLabel");
         leftCol->addWidget(mDescLabel);
         cardLayout->addLayout(leftCol, 1);
 
@@ -61,7 +61,6 @@ WeatherWindow::WeatherWindow(QWidget * parent) : BaseWindow(parent)
         mTabBar = new QTabBar(this);
         mTabBar->addTab("Heute");
         mTabBar->addTab("5 Tage Trend");
-        mTabBar->setStyleSheet("QTabBar::tab { height: 40px; padding: 0px 20px; }");
         mainLayout->addWidget(mTabBar);
 
         //      CHART

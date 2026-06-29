@@ -24,6 +24,8 @@ class SettingsWindow : public BaseWindow
 {
         Q_OBJECT
 public:
+        enum class ConnectionStatus { OK, ERROR, WARNING };
+
         SettingsWindow(QWidget * parent = nullptr);
         void onBrightnessChanged(int value);
         void onScanClicked();
@@ -37,7 +39,7 @@ public:
         QString growattPassword() const { return mGrowattPasswordInput->text(); }
         QString growattServerUrl() const { return mGrowattServerCombo->currentData().toString(); }
         QString growattSelectedPlantId() const { return mGrowattPlantCombo->currentData().toString(); }
-        void setGrowattStatus(const QString &text, const QString &color);
+        void setGrowattStatus(const QString &text, ConnectionStatus status);
         void populateGrowattPlants(const QJsonArray &plants);
 
 signals:

@@ -23,7 +23,7 @@ PlantOverviewWindow::PlantOverviewWindow(QWidget * parent) : BaseWindow(parent)
 
         // current power card
         QWidget * powerCard = new QWidget(this);
-        powerCard->setStyleSheet("background-color: darkBlue; border-radius: 12px; padding: 20px");
+        powerCard->setObjectName("powerCard");
         QVBoxLayout * powerLayout = new QVBoxLayout(powerCard);
         powerLayout->setAlignment(Qt::AlignCenter);
         QHBoxLayout * powerRow = new QHBoxLayout();
@@ -44,7 +44,7 @@ PlantOverviewWindow::PlantOverviewWindow(QWidget * parent) : BaseWindow(parent)
 
         // Today energy card
         QWidget * todayCard = new QWidget(this);
-        todayCard->setStyleSheet("background-color: darkBlue; border-radius: 12px; padding: 15px;");
+        todayCard->setObjectName("todayCard");
         QVBoxLayout * todayLayout = new QVBoxLayout();
         todayLayout->setAlignment(Qt::AlignCenter);
         mTodayEnergyValueLabel = new QLabel("0 Wh", todayCard);
@@ -57,7 +57,7 @@ PlantOverviewWindow::PlantOverviewWindow(QWidget * parent) : BaseWindow(parent)
 
         // Battery card
         QWidget * batteryCard = new QWidget(this);
-        batteryCard->setStyleSheet("font-size:16px; background-color: darkBlue; border-radius: 12px; padding: 15px");
+        batteryCard->setObjectName("batteryCard");
         QVBoxLayout * batteryLayout = new QVBoxLayout();
         batteryLayout->setAlignment(Qt::AlignCenter);
         mBatteryValueLabel = new QLabel("--", batteryCard);

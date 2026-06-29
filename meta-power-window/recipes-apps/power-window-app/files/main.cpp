@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QScreen>
+#include <QFile>
 #include <QDebug>
 #include "SwipeManager.hpp"
 #include "ScreenSaverManager.hpp"
@@ -22,6 +23,13 @@ int main(int argc, char ** argv)
         QApplication app(argc, argv);
         QVector<PvStatsData> growattEnergyData;
 
+        // load style sheet
+        QFile styleSheet("/usr/share/power-window-app/style.qss");
+        if (styleSheet.open(QFile::ReadOnly | QFile::Text)) {
+                app.setStyleSheet(styleSheet.readAll());
+                styleSheet.close();
+        }
+
         SwipeManager sm;
         new ScreenSaverManager(30, &sm); // self-registers -> no need to store
 
@@ -35,9 +43,9 @@ int main(int argc, char ** argv)
         GrowattFetcher * gwFetcher = new GrowattFetcher();
         QObject::connect(gwFetcher, &GrowattFetcher::loginResult, setWnd, [setWnd, gwFetcher](bool ok, const QString &msg) {
                 if (ok) {
-                        setWnd->setGrowattStatus("Verbunden", "green");
+                        setWnd->setGrowattStatus("Verbunden", SettingsWindow::ConnectionStatus::OK);
                         gwFetcher->fetchPlantList();
-                } else { setWnd->setGrowattStatus(msg, "red"); }
+                } else { setWnd->setGrowattStatus(msg, SettingsWindow::ConnectionStatus::ERROR); }
         });
         QObject::connect(gwFetcher, &GrowattFetcher::plantListReady, setWnd, [setWnd, gwFetcher](const QJsonArray &plants) {
                 setWnd->populateGrowattPlants(plants);

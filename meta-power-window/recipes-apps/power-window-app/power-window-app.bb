@@ -24,7 +24,7 @@ SRC_URI = " \
     file://power-window-app.pro \
     file://power-window-app.service \
 "
-
+SRC_URI += "file://style.qss"
 SRC_URI += "file://weatherIcons/"
 
 S = "${WORKDIR}"
@@ -41,6 +41,7 @@ do_install(){
 
     install -d ${D}${datadir}/power-window-app/weatherIcons
     install -m 0644 ${S}/weatherIcons/*.png ${D}${datadir}/power-window-app/weatherIcons/
+    install -m 0644 ${S}/style.qss ${D}${datadir}/power-window-app/
 }
 
 SYSTEMD_SERVICE:${PN} = "power-window-app.service"

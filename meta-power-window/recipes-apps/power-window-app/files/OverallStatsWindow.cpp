@@ -31,7 +31,6 @@ OverallStatsWindow::OverallStatsWindow(QVector<PvStatsData> * data, QWidget * pa
         mTabBar->addTab("Woche");
         mTabBar->addTab("Monat");
         mTabBar->addTab("Jahr");
-        mTabBar->setStyleSheet("QTabBar::tab { height: 40px; padding: 0px 20px; }");
         layout->addWidget(mTabBar);
 
         // CHART

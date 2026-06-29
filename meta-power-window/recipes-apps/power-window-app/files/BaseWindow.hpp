@@ -10,7 +10,6 @@ public:
         explicit BaseWindow(QWidget * parent = nullptr) : QWidget(parent)
         {
                 setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-                setStyleSheet("background-color: darkBlue; color: white; font-size: 18px");
         }
         virtual ~BaseWindow() = default;
 };
