@@ -84,24 +84,18 @@ cp -r build/tmp-glibc/deploy/ipk/* <UPDATE PACKAGES DIR>
 
 - [x] Basic OS Setup
 - [ ] App
-  - [ ] Settings
+  - [x] Settings
     - [x] Display settings
     - [x] WiFi settings
     - [x] Update control
-    - [ ] Power account settings
+    - [x] Power account settings
+    - [ ] Settings presentation
   - [x] Weather feature
     - [x] Weather data Fetch
-    - [x] Weather data presentation
+    - [ ] Weather data presentation
   - [ ] Power data feature
     - [x] Power data fetch
     - [ ] Power data presentation
-- [ ] App design re-work
-  - [ ] Weather Data Window
-  - [ ] Plant Overview Window
-  - [ ] Current Power Stats Window
-  - [ ] Overall Power Stats Window
-  - [ ] Settings Window
-- [ ] OS Re-Work
 
 ## Write SD Card
 
