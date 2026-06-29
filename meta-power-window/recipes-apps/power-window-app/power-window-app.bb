@@ -2,22 +2,25 @@ SUMMARY = "Power Window App"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 PV = "1.0"
-PR = "r5"
+PR = "r0"
 
-DEPENDS = "qtbase qtcharts"
+DEPENDS = "qtbase qtcharts openssl"
 
 SRC_URI = " \
     file://main.cpp \
     file://BaseWindow.hpp \
     file://PvStatsData.hpp \
+    file://GrowattData.hpp \
     file://KeyboardWidget.hpp file://KeyboardWidget.cpp \
     file://SwipeManager.hpp file://SwipeManager.cpp \
     file://ScreenSaverManager.hpp file://ScreenSaverManager.cpp \
     file://WeatherFetcher.hpp file://WeatherFetcher.cpp \
     file://WeatherWindow.hpp file://WeatherWindow.cpp \
     file://SettingsWindow.hpp file://SettingsWindow.cpp \
+    file://GrowattFetcher.hpp file://GrowattFetcher.cpp \
     file://CurrentStatsWindow.hpp file://CurrentStatsWindow.cpp \
     file://OverallStatsWindow.hpp file://OverallStatsWindow.cpp \
+    file://PlantOverviewWindow.hpp file://PlantOverviewWindow.cpp \
     file://power-window-app.pro \
     file://power-window-app.service \
 "

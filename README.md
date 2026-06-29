@@ -93,9 +93,14 @@ cp -r build/tmp-glibc/deploy/ipk/* <UPDATE PACKAGES DIR>
     - [x] Weather data Fetch
     - [x] Weather data presentation
   - [ ] Power data feature
-    - [ ] Power data fetch
+    - [x] Power data fetch
     - [ ] Power data presentation
 - [ ] App design re-work
+  - [ ] Weather Data Window
+  - [ ] Plant Overview Window
+  - [ ] Current Power Stats Window
+  - [ ] Overall Power Stats Window
+  - [ ] Settings Window
 - [ ] OS Re-Work
 
 ## Write SD Card

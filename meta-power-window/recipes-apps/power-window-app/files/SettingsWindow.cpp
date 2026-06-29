@@ -14,9 +14,11 @@
 #include <QFile>
 #include <QTextStream>
 #include <QTimer>
+#include <QJsonArray>
 #include "BaseWindow.hpp"
 #include "SettingsWindow.hpp"
 #include "KeyboardWidget.hpp"
+#include "GrowattFetcher.hpp"
 
 SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
 {
@@ -34,6 +36,7 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         mTabBar = new QTabBar(this);
         mTabBar->addTab("Anzeige");
         mTabBar->addTab("WiFi");
+        mTabBar->addTab("Growatt");
         mTabBar->addTab("Update");
         mTabBar->setStyleSheet("QTabBar::tab { height: 40px; padding: 0px 20px; }");
         mainLayout->addWidget(mTabBar);
@@ -88,21 +91,67 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         mPasswordInput->setStyleSheet("background-color: darkBlue; border: 1px solid gray; padding-left: 10px; border-radius: 5px;");
         wifiLayout->addWidget(mPasswordInput);
 
-        mConnectButton = new QPushButton("Verbinden", wifiView);
-        mConnectButton->setFixedHeight(45);
-        mConnectButton->setStyleSheet("background-color: green; font-weight: bold; border-radius: 5px;");
-        wifiLayout->addWidget(mConnectButton);
+        mWifiConnectButton = new QPushButton("Verbinden", wifiView);
+        mWifiConnectButton->setFixedHeight(45);
+        mWifiConnectButton->setStyleSheet("background-color: green; font-weight: bold; border-radius: 5px;");
+        wifiLayout->addWidget(mWifiConnectButton);
 
         mWifiStatusLabel = new QLabel("", wifiView);
         mWifiStatusLabel->setFixedHeight(45);
         mWifiStatusLabel->setStyleSheet("background-color: green; font-weight: bold; border-radius: 5px;");
         wifiLayout->addWidget(mWifiStatusLabel);
 
-        mKeyboard = new KeyboardWidget(wifiView);
-        wifiLayout->addWidget(mKeyboard);
-        mKeyboard->attachInput(mPasswordInput);
-
         mSetViewContainer->addWidget(wifiView);
+
+        // GROWATT SETTINGS VIEW
+        QWidget * growattView = new QWidget(this);
+        QVBoxLayout * growattLayout = new QVBoxLayout(growattView);
+        growattLayout->setContentsMargins(20, 20, 20, 20);
+        growattLayout->setSpacing(12);
+
+        QLabel * growattLabel = new QLabel("Growatt Konto", growattView);
+        growattLayout->addWidget(growattLabel);
+
+        mGrowattUsernameInput = new QLineEdit(growattView);
+        mGrowattUsernameInput->setPlaceholderText("Benutzername (E-Mail)");
+        mGrowattUsernameInput->setFixedHeight(45);
+        growattLayout->addWidget(mGrowattUsernameInput);
+
+        mGrowattPasswordInput = new QLineEdit(growattView);
+        mGrowattPasswordInput->setPlaceholderText("Passwort");
+        mGrowattPasswordInput->setEchoMode(QLineEdit::Password);
+        mGrowattPasswordInput->setFixedHeight(45);
+        growattLayout->addWidget(mGrowattPasswordInput);
+
+        mGrowattServerCombo = new QComboBox(growattView);
+        mGrowattServerCombo->addItem("Europa / Welt (OpenAPI)", "https://openapi.growatt.com");
+        mGrowattServerCombo->addItem("China (OpenAPI)", "https://openapi-cn.growatt.com");
+        mGrowattServerCombo->addItem("Nordamerika (OpenAPI)", "https://openapi-us.growatt.com");
+        mGrowattServerCombo->addItem("Australien / Neuseeland (OpenAPI)", "https://openapi-au.growatt.com");
+        mGrowattServerCombo->addItem("server.growatt.com (Legacy)", "https://server.growatt.com");
+        growattLayout->addWidget(mGrowattServerCombo);
+
+        mGrowattPlantCombo = new QComboBox(growattView);
+        mGrowattPlantCombo->setPlaceholderText("-- Kraftwerk wählen --");
+        growattLayout->addWidget(mGrowattPlantCombo);
+
+        mGrowattStatusLabel = new QLabel("", growattView);
+        mGrowattStatusLabel->setFixedHeight(45);
+        growattLayout->addWidget(mGrowattStatusLabel);
+
+        QHBoxLayout * growattBtnRow = new QHBoxLayout(growattView);
+
+        mGrowattConnectBtn = new QPushButton("Verbinden", growattView);
+        mGrowattConnectBtn->setFixedHeight(45);
+        growattBtnRow->addWidget(mGrowattConnectBtn);
+
+        mGrowattClearBtn = new QPushButton("Löschen", growattView);
+        mGrowattClearBtn->setFixedHeight(45);
+        growattBtnRow->addWidget(mGrowattClearBtn);
+
+        growattLayout->addLayout(growattBtnRow);
+        growattLayout->addStretch();
+        mSetViewContainer->addWidget(growattView);
 
         // UPDATE VIEW
         QWidget * updateView = new QWidget(this);
@@ -128,10 +177,19 @@ SettingsWindow::SettingsWindow(QWidget * parent) : BaseWindow(parent)
         mSetViewContainer->addWidget(updateView);
         mainLayout->addWidget(mSetViewContainer);
 
+        //KEYBOARD
+        mKeyboard = new KeyboardWidget(this);
+        mainLayout->addWidget(mKeyboard);
+        mKeyboard->attachInput(mPasswordInput);
+        mKeyboard->attachInput(mGrowattUsernameInput);
+        mKeyboard->attachInput(mGrowattPasswordInput);
+
         connect(mTabBar, &QTabBar::currentChanged, mSetViewContainer, &QStackedWidget::setCurrentIndex);
         connect(mBrightnessDial, &QDial::valueChanged, this, &SettingsWindow::onBrightnessChanged);
         connect(mScanButton, &QPushButton::clicked, this, &SettingsWindow::onScanClicked);
-        connect(mConnectButton, &QPushButton::clicked, this, &SettingsWindow::onWifiConnectClicked);
+        connect(mWifiConnectButton, &QPushButton::clicked, this, &SettingsWindow::onWifiConnectClicked);
+        connect(mGrowattConnectBtn, &QPushButton::clicked, this, &SettingsWindow::onGrowattConnectClicked);
+        connect(mGrowattClearBtn, &QPushButton::clicked, this, &SettingsWindow::onGrowattClearClicked);
         connect(mUpdateButton, &QPushButton::clicked, this, &SettingsWindow::onUpdateClicked);
 }
 
@@ -228,8 +286,8 @@ void SettingsWindow::onWifiConnectClicked()
                 return;
         }
 
-        mConnectButton->setEnabled(false);
-        mConnectButton->setText("Verbinde...");
+        mWifiConnectButton->setEnabled(false);
+        mWifiConnectButton->setText("Verbinde...");
         mWifiStatusLabel->setText("");
 
         QString cmd = QString(
@@ -253,8 +311,8 @@ void SettingsWindow::onWifiConnectClicked()
                         mWifiStatusLabel->setText("Verbindung fehlgeschlagen");
                         mWifiStatusLabel->setStyleSheet("QLabel { background-color: red; color: white; }");
                 }
-                mConnectButton->setEnabled(true);
-                mConnectButton->setText("Verbinden");
+                mWifiConnectButton->setEnabled(true);
+                mWifiConnectButton->setText("Verbinden");
                 mWifiProcess->deleteLater();
                 mWifiProcess = nullptr;
         });
@@ -313,4 +371,36 @@ void SettingsWindow::onUpdateClicked()
         });
         mUpdatePollTimer->start(500);
         mUpdateOutput->append("Update wirk im Hintergrund ausgeführt...\n");
+}
+
+void SettingsWindow::onGrowattConnectClicked()
+{
+        emit growattConnectRequested(mGrowattServerCombo->currentData().toString());
+}
+
+void SettingsWindow::onGrowattClearClicked()
+{
+        mGrowattUsernameInput->clear();
+        mGrowattPasswordInput->clear();
+        mGrowattPlantCombo->clear();
+        mGrowattStatusLabel->setText("Zugangsdaten gelöscht");
+        mGrowattStatusLabel->setStyleSheet(
+                "QLabel {background-color: yellow; color: black; border-radius: 5px;}");
+}
+
+void SettingsWindow::setGrowattStatus(const QString &text, const QString &color)
+{
+        mGrowattStatusLabel->setText(text);
+        mGrowattStatusLabel->setStyleSheet(
+                QString("QLabel { background-color: %1; color: black; border-radius: 5px; }")
+                .arg(color));
+}
+
+void SettingsWindow::populateGrowattPlants(const QJsonArray &plants)
+{
+        mGrowattPlantCombo->clear();
+        for (const QJsonValue &val : plants) {
+                QJsonObject obj = val.toObject();
+                mGrowattPlantCombo->addItem(obj["plantName"].toString(), obj["plantId"].toString());
+        }
 }

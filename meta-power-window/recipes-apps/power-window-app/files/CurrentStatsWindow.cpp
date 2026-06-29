@@ -29,9 +29,8 @@ void CurrentStatsWindow::updateData(QVector<PvStatsData> * data)
 
 void CurrentStatsWindow::calcCurrentStats()
 {
-        if (mData == nullptr)
-        {
-                qWarning() << "Statistical data reference is NULL";
+        if (mData == nullptr || mData->isEmpty()) {
+                qWarning("Statistical data not available");
                 return;
         }
 
@@ -55,8 +54,8 @@ void CurrentStatsWindow::calcCurrentStats()
 void CurrentStatsWindow::updateBars()
 {
         calcCurrentStats();
-        float systemPerc = mSystemSelfConsumption / mSystemProduction;
-        float loadPerc = mLoadSelfConsumed / mLoadConsumption;
-        mSystemPb->setValue(systemPerc);
-        mSystemPb->setValue(loadPerc);
+        float systemPerc = mSystemProduction > 0 ? mSystemSelfConsumption / mSystemProduction : 0;
+        float loadPerc = mLoadConsumption > 0 ? mLoadSelfConsumed / mLoadConsumption : 0;
+        mSystemPb->setValue(static_cast<int>(systemPerc * 100));
+        mLoadPb->setValue(static_cast<int>(loadPerc * 100));
 }

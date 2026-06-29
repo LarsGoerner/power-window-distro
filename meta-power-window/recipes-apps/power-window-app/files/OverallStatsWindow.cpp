@@ -66,16 +66,14 @@ void OverallStatsWindow::updateData(QVector<PvStatsData> * data)
 
 void OverallStatsWindow::updateChart(int idx)
 {
-        if (mData == nullptr) {
-                qWarning() << "Stats data reference is NULL";
+        if (mData == nullptr || mData->isEmpty()) {
+                qWarning("Stats data not available");
                 return;
         }
         QVector<PvStatsData> filteredData;
 
         if (idx == TR_DAY) {
                 QDate today = QDate::currentDate();
-                qDebug() << "today: " << today.toString() << "; example date: " << mData->first().datetime.date().toString()
-                         << "; days to: " << mData->first().datetime.date().daysTo(today);
                 for (const PvStatsData &dat : *mData) {
                         if (dat.datetime.date().daysTo(today) == 0) {
                                 filteredData.append(dat);
