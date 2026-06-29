@@ -35,6 +35,7 @@ OverallStatsWindow::OverallStatsWindow(QVector<PvStatsData> * data, QWidget * pa
 
         // CHART
         mChart = new QChart();
+        mChart->setTheme(QChart::ChartThemeBlueCerulean);
         mChart->setMargins(QMargins(0, 0, 0, 0));
         mChart->setTitle("Energie");
         mChart->legend()->setVisible(true);

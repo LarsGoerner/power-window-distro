@@ -65,8 +65,8 @@ WeatherWindow::WeatherWindow(QWidget * parent) : BaseWindow(parent)
 
         //      CHART
         mChart = new QChart();
+        mChart->setTheme(QChart::ChartThemeBlueCerulean);
         mChart->setMargins(QMargins(0, 0, 0, 0));
-        mChart->setTitle("");
         mChart->legend()->setVisible(true);
         mChart->legend()->setAlignment(Qt::AlignRight);
 
@@ -80,7 +80,6 @@ WeatherWindow::WeatherWindow(QWidget * parent) : BaseWindow(parent)
 
         mTimeAxis = new QDateTimeAxis(this);
         mTimeAxis->setFormat("HH:mm");
-        mTimeAxis->setTitleText("Uhrzeit");
         mChart->addAxis(mTimeAxis, Qt::AlignBottom);
 
         mChartView = new QChartView(mChart, this);
@@ -104,10 +103,8 @@ void WeatherWindow::updateChart(int idx)
 
         if (idx == WEATHER_TODAY) {
                 mTimeAxis->setFormat("HH:mm");
-                mTimeAxis->setTitleText("Uhrzeit");
         } else if (idx == WEATHER_5_DAY) {
                 mTimeAxis->setFormat("dd.MM.yy");
-                mTimeAxis->setTitleText("Datum");
         } else {
                 qWarning() << "Unknown WeatherDataType";
                 return;
@@ -115,6 +112,7 @@ void WeatherWindow::updateChart(int idx)
 
         QLineSeries * rainSeries = new QLineSeries();
         rainSeries->setName("Regen");
+        rainSeries->setColor(Qt::white);
         const auto &rainDataPoints = mRainAmountDatasets[idx];
         if (rainDataPoints.isEmpty()) {
                 qWarning() << "No rain data";
@@ -139,6 +137,7 @@ void WeatherWindow::updateChart(int idx)
         rainSeries->attachAxis(mRainAxis);
 
         QLineSeries * highTempSeries = new QLineSeries();
+        highTempSeries->setColor(Qt::red);
         highTempSeries->setName("Max T");
         const auto &highTempDataPoints = mHighTempDatasets[idx];
         if (highTempDataPoints.isEmpty()) {
@@ -161,6 +160,7 @@ void WeatherWindow::updateChart(int idx)
         highTempSeries->attachAxis(mTempAxis);
 
         QLineSeries * lowTempSeries = new QLineSeries();
+        lowTempSeries->setColor(Qt::yellow);
         lowTempSeries->setName("Min T");
         const auto &lowTempDataPoints = mLowTempDatasets[idx];
         if (lowTempDataPoints.isEmpty()) {
