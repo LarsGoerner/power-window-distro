@@ -95,8 +95,8 @@ cp -r build/tmp-glibc/deploy/ipk/* <UPDATE PACKAGES DIR>
     - [ ] Settings presentation
   - [x] Weather feature
     - [x] Weather data Fetch
-    - [ ] Environmental sensors
-      - [ ] Add DHT11
+    - [x] Environmental sensors
+      - [x] Add DHT11
     - [ ] Weather data presentation
       - [ ] Current weather/Environmental data view
       - [ ] Weather forecast view

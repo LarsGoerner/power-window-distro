@@ -58,6 +58,14 @@
         pinctrl-0 = <&vcc5v0_otg1_en>;
         pinctrl-names = "default";
     };
+
+    dht11_sensor {
+        compatible = "dht11";
+        status = "okay";
+        gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>;
+        pinctrl-0 = <&dht11_pin>;
+        pinctrl-names = "default";
+    };
 };
 
 /* == DISPLAY =============================================================== */

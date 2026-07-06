@@ -1,0 +1,34 @@
+From 0071a56746bd93f2f10854f531c59b2a1d258192 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Lars=20G=C3=B6rner?= <lgoerner@hotmail.de>
+Date: Mon, 6 Jul 2026 10:09:26 +0200
+Subject: [PATCH] allow non-zero decimals
+
+---
+ drivers/iio/humidity/dht11.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/iio/humidity/dht11.c b/drivers/iio/humidity/dht11.c
+index c97e25448772..7dedec2990af 100644
+--- a/drivers/iio/humidity/dht11.c
++++ b/drivers/iio/humidity/dht11.c
+@@ -152,14 +152,9 @@ static int dht11_decode(struct dht11 *dht11, int offset)
+ 		dht11->temperature = (((temp_int & 0x7f) << 8) + temp_dec) *
+ 					((temp_int & 0x80) ? -100 : 100);
+ 		dht11->humidity = ((hum_int << 8) + hum_dec) * 100;
+-	} else if (temp_dec == 0 && hum_dec == 0) {  /* DHT11 */
+-		dht11->temperature = temp_int * 1000;
+-		dht11->humidity = hum_int * 1000;
+-	} else {
+-		dev_err(dht11->dev,
+-			"Don't know how to decode data: %d %d %d %d\n",
+-			hum_int, hum_dec, temp_int, temp_dec);
+-		return -EIO;
++	} else {  /* DHT11 */
++		dht11->temperature = (temp_int * 1000) + (temp_dec * 100);
++		dht11->humidity = (hum_int * 1000) + (hum_dec * 100);
+ 	}
+ 
+ 	return 0;
+-- 
+2.43.0
+

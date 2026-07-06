@@ -30,8 +30,10 @@ SRC_URI = "\
     file://systemd.cfg \
     file://wifi-bt.cfg \
     file://esp32-c6.cfg \
+    file://dht11.cfg \
     file://0001-add-waveshare-dsi-backlight-driver.patch \
     file://0002-goodix-touch-poll-mode.patch \
+    file://0003-allow-non-zero-decimals.patch \
 "
 
 PROVIDES += "virtual/kernel"
