@@ -28,7 +28,8 @@ IMAGE_INSTALL = " \
 "
 
 # QT5
-IMAGE_INSTALL += "qtbase qtdeclarative qtwayland"
+IMAGE_INSTALL += "qtbase qtdeclarative qtdeclarative-qmlplugins qtquickcontrols2 qtwayland"
+IMAGE_INSTALL += "qtvirtualkeyboard qtvirtualkeyboard-qmlplugins"
 IMAGE_INSTALL += "ca-certificates openssl"
 IMAGE_INSTALL += "ttf-dejavu-sans"
 #IMAGE_INSTALL += "qt5-helloworld"

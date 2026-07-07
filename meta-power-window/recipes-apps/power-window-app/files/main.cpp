@@ -1,90 +1,33 @@
-#include <QApplication>
-#include <QObject>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <QScreen>
-#include <QFile>
-#include <QDebug>
-#include "SwipeManager.hpp"
-#include "ScreenSaverManager.hpp"
-#include "BaseWindow.hpp"
-#include "WeatherWindow.hpp"
-#include "SettingsWindow.hpp"
-#include "CurrentStatsWindow.hpp"
-#include "OverallStatsWindow.hpp"
-#include "PvStatsData.hpp"
-#include "PlantOverviewWindow.hpp"
-#include "GrowattFetcher.hpp"
-#include "GrowattData.hpp"
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include "Theme.hpp"
+#include "Backlight.hpp"
+#include "Updater.hpp"
+#include "WifiManager.hpp"
 
 int main(int argc, char ** argv)
 {
-        QApplication app(argc, argv);
-        QVector<PvStatsData> growattEnergyData;
+        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-        // load style sheet
-        QFile styleSheet("/usr/share/power-window-app/style.qss");
-        if (styleSheet.open(QFile::ReadOnly | QFile::Text)) {
-                app.setStyleSheet(styleSheet.readAll());
-                styleSheet.close();
-        }
+        QGuiApplication app(argc, argv);
+        app.setApplicationName("power-window-app");
+        QQmlApplicationEngine appEngine;
+        Theme theme;
+        qmlRegisterSingletonInstance("PowerWindow", 1, 0, "Theme", &theme);
+        Backlight backlight;
+        qmlRegisterSingletonInstance("PowerWindow", 1, 0, "Backlight", &backlight);
+        Updater updater;
+        qmlRegisterSingletonInstance("PowerWindow", 1, 0, "Updater", &updater);
+        WifiManager wifiManager;
+        qmlRegisterSingletonInstance("PowerWindow", 1, 0, "WifiManager", &wifiManager);
 
-        SwipeManager sm;
-        new ScreenSaverManager(30, &sm); // self-registers -> no need to store
+        // load qml file into binary resource system
+        const QUrl url(QStringLiteral("qrc:/main.qml"));
+        QObject::connect(&appEngine, &QQmlApplicationEngine::objectCreated, &app,
+                         [url](QObject * obj, const QUrl &objUrl) {
+                if (!obj && url == objUrl) { QCoreApplication::exit(-1); }
+        }, Qt::QueuedConnection);
 
-        WeatherWindow * wtrWnd = new WeatherWindow();
-        PlantOverviewWindow * plantOvvWnd = new PlantOverviewWindow();
-        CurrentStatsWindow * curStatWnd = new CurrentStatsWindow(&growattEnergyData);
-        OverallStatsWindow * ovrStatWnd = new OverallStatsWindow(&growattEnergyData);
-        SettingsWindow * setWnd = new SettingsWindow();
-
-        // GROWATT FETCHER
-        GrowattFetcher * gwFetcher = new GrowattFetcher();
-        QObject::connect(gwFetcher, &GrowattFetcher::loginResult, setWnd, [setWnd, gwFetcher](bool ok, const QString &msg) {
-                if (ok) {
-                        setWnd->setGrowattStatus("Verbunden", SettingsWindow::ConnectionStatus::OK);
-                        gwFetcher->fetchPlantList();
-                } else { setWnd->setGrowattStatus(msg, SettingsWindow::ConnectionStatus::ERROR); }
-        });
-        QObject::connect(gwFetcher, &GrowattFetcher::plantListReady, setWnd, [setWnd, gwFetcher](const QJsonArray &plants) {
-                setWnd->populateGrowattPlants(plants);
-                if (!plants.isEmpty()) {
-                        QString firstId = plants[0].toObject()["plantId"].toString();
-                        gwFetcher->fetchRealtimeData(firstId);
-                        gwFetcher->fetchEnergyData(firstId, QDate::currentDate());
-                        gwFetcher->startPolling(30);
-                }
-        });
-        QObject::connect(gwFetcher, &GrowattFetcher::realtimeDataReady, plantOvvWnd, &PlantOverviewWindow::updateRealtimeData);
-        QObject::connect(gwFetcher, &GrowattFetcher::energyDataReady, [&growattEnergyData, curStatWnd, ovrStatWnd](const QVector<PvStatsData> &data) {
-                growattEnergyData = data;
-                curStatWnd->updateData(&growattEnergyData);
-                ovrStatWnd->updateData(&growattEnergyData);
-        });
-        QObject::connect(gwFetcher, &GrowattFetcher::errorOccurred, plantOvvWnd, &PlantOverviewWindow::showError);
-        QObject::connect(setWnd, &SettingsWindow::growattConnectRequested, gwFetcher, [gwFetcher, setWnd](const QString &serverUrl) {
-                gwFetcher->login(setWnd->growattUsername(), setWnd->growattPassword(), serverUrl);
-        });
-        QObject::connect(setWnd, &SettingsWindow::growattPlantSelected, gwFetcher, [gwFetcher](const QString &plantId) {
-                gwFetcher->fetchRealtimeData(plantId);
-                gwFetcher->fetchEnergyData(plantId, QDate::currentDate());
-        });
-
-        sm.addWindow(wtrWnd);
-        sm.addWindow(plantOvvWnd);
-        sm.addWindow(curStatWnd);
-        sm.addWindow(ovrStatWnd);
-        sm.addWindow(setWnd);
-
-        sm.show();
-        QScreen * screen = QGuiApplication::primaryScreen();
-        if (screen) { sm.setFixedSize(screen->size()); }
-        else { qWarning() << "Failed to get primary screen reference"; }
-
-        if (gwFetcher->isLoggedIn() && !gwFetcher->username().isEmpty()) {
-                gwFetcher->login(gwFetcher->username(), gwFetcher->password(), gwFetcher->serverUrl());
-        }
-
+        appEngine.load(url);
         return app.exec();
 }

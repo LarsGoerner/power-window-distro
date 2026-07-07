@@ -1,14 +1,11 @@
-QT += core gui widgets charts network
-TARGET = power-window-app
-TEMPLATE = app
+QT += qml quick
 
-HEADERS += BaseWindow.hpp PvStatsData.hpp KeyboardWidget.hpp SwipeManager.hpp \
-           ScreenSaverManager.hpp WeatherWindow.hpp WeatherFetcher.hpp \
-           SettingsWindow.hpp CurrentStatsWindow.hpp OverallStatsWindow.hpp \
-           GrowattData.hpp GrowattFetcher.hpp PlantOverviewWindow.hpp
-SOURCES += main.cpp SwipeManager.cpp ScreenSaverManager.cpp KeyboardWidget.cpp \
-           WeatherWindow.cpp WeatherFetcher.cpp SettingsWindow.cpp \
-           CurrentStatsWindow.cpp OverallStatsWindow.cpp GrowattFetcher.cpp \
-           PlantOverviewWindow.cpp
+CONFIG += c++11
 
-LIBS += -lssl -lcrypto
+SOURCES += main.cpp Theme.cpp Backlight.cpp Updater.cpp WifiManager.cpp
+HEADERS += Theme.hpp Backlight.hpp Updater.hpp WifiManager.hpp
+
+RESOURCES += resources.qrc
+
+target.path = /usr/bin
+INSTALLS += target
