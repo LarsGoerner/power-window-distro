@@ -87,7 +87,7 @@ cp -r build/tmp-glibc/deploy/ipk/* <UPDATE PACKAGES DIR>
   - [x] Settings
     - [ ] Display settings
       - [x] Brightness
-      - [ ] Power saver options
+      - [x] Power saver options
       - [x] App style settings
     - [x] WiFi settings
     - [x] Update control

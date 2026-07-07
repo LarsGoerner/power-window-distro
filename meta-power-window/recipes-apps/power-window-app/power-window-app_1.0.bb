@@ -20,6 +20,7 @@ SRC_URI += "\
     file://src/WifiManager.hpp file://src/WifiManager.cpp \
     file://src/DhtSensor.hpp file://src/DhtSensor.cpp \
     file://src/WeatherFetcher.hpp file://src/WeatherFetcher.cpp \
+    file://src/ScreenSaver.hpp file://src/ScreenSaver.cpp \
     file://resources.qrc \
     file://power-window-app.pro \
     file://power-window-app.service \

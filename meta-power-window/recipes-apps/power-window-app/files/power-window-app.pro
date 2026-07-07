@@ -9,7 +9,8 @@ SOURCES += \
         src/Updater.cpp \
         src/WifiManager.cpp \
         src/DhtSensor.cpp \
-        src/WeatherFetcher.cpp
+        src/WeatherFetcher.cpp \
+        src/ScreenSaver.cpp
 
 HEADERS += \
         src/Theme.hpp \
@@ -17,7 +18,8 @@ HEADERS += \
         src/Updater.hpp \
         src/WifiManager.hpp \
         src/DhtSensor.hpp \
-        src/WeatherFetcher.hpp
+        src/WeatherFetcher.hpp \
+        src/ScreenSaver.hpp
 
 RESOURCES += resources.qrc
 
