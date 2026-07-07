@@ -88,20 +88,20 @@ cp -r build/tmp-glibc/deploy/ipk/* <UPDATE PACKAGES DIR>
     - [ ] Display settings
       - [x] Brightness
       - [ ] Power saver options
-      - [ ] App style settings
+      - [x] App style settings
     - [x] WiFi settings
     - [x] Update control
-    - [x] Power account settings
+    - [ ] Power account settings
     - [ ] Settings presentation
   - [x] Weather feature
-    - [x] Weather data Fetch
+    - [ ] Weather data Fetch
     - [x] Environmental sensors
       - [x] Add DHT11
     - [ ] Weather data presentation
       - [ ] Current weather/Environmental data view
       - [ ] Weather forecast view
   - [ ] Power data feature
-    - [x] Power data fetch
+    - [ ] Power data fetch
     - [ ] Power data presentation
 
 ## Write SD Card
