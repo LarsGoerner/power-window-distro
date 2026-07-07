@@ -1,5 +1,12 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/AmbientPage.qml</file>
+        <file>qml/WeatherPage.qml</file>
+        <file>qml/SettingsPage.qml</file>
+        <file>qml/DisplayTab.qml</file>
+        <file>qml/WifiTab.qml</file>
+        <file>qml/GrowattTab.qml</file>
+        <file>qml/UpdateTab.qml</file>
     </qresource>
 </RCC>

@@ -5,12 +5,21 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 DEPENDS = "qtbase qtdeclarative qtcharts openssl"
 
 SRC_URI += "\
-    file://main.cpp \
-    file://main.qml \
-    file://Theme.hpp file://Theme.cpp \
-    file://Backlight.hpp file://Backlight.cpp \
-    file://Updater.hpp file://Updater.cpp \
-    file://WifiManager.hpp file://WifiManager.cpp \
+    file://src/main.cpp \
+    file://qml/main.qml \
+    file://qml/AmbientPage.qml \
+    file://qml/WeatherPage.qml \
+    file://qml/SettingsPage.qml \
+    file://qml/DisplayTab.qml \
+    file://qml/WifiTab.qml \
+    file://qml/GrowattTab.qml \
+    file://qml/UpdateTab.qml \
+    file://src/Theme.hpp file://src/Theme.cpp \
+    file://src/Backlight.hpp file://src/Backlight.cpp \
+    file://src/Updater.hpp file://src/Updater.cpp \
+    file://src/WifiManager.hpp file://src/WifiManager.cpp \
+    file://src/DhtSensor.hpp file://src/DhtSensor.cpp \
+    file://src/WeatherFetcher.hpp file://src/WeatherFetcher.cpp \
     file://resources.qrc \
     file://power-window-app.pro \
     file://power-window-app.service \
@@ -24,6 +33,8 @@ inherit qmake5 systemd
 RDEPENDS:${PN} += " \
     qtdeclarative-qmlplugins \
     qtquickcontrols2 \
+    qtcharts \
+    qtcharts-qmlplugins \
 "
 
 do_install() {

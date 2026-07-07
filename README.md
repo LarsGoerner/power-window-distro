@@ -94,12 +94,12 @@ cp -r build/tmp-glibc/deploy/ipk/* <UPDATE PACKAGES DIR>
     - [ ] Power account settings
     - [ ] Settings presentation
   - [x] Weather feature
-    - [ ] Weather data Fetch
+    - [x] Weather data Fetch
     - [x] Environmental sensors
       - [x] Add DHT11
-    - [ ] Weather data presentation
-      - [ ] Current weather/Environmental data view
-      - [ ] Weather forecast view
+    - [x] Weather data presentation
+      - [x] Current weather/Environmental data view
+      - [x] Weather forecast view
   - [ ] Power data feature
     - [ ] Power data fetch
     - [ ] Power data presentation
