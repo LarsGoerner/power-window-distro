@@ -104,7 +104,7 @@ Page {
         hiddenX.max = n - 0.3
         tempAxis.min = lo - pad
         tempAxis.max = hi + pad
-        rainAxis.max = mr || 1
+        rainAxis.max = 10
 
         var cats = []
         for (var i = 0; i < n; i++) { cats.push(p[i].day) }
