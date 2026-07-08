@@ -16,11 +16,14 @@
 
 #define DSP_BLANK_FILE  "/sys/class/graphics/fb0/blank"
 
+#define SET_PATH        "Screensaver/"
+#define SET_MODE_PATH   SET_PATH "mode"
+
 ScreenSaver::ScreenSaver(Backlight * backlight, QObject * parent)
         : QObject(parent), mBacklight(backlight), mSavedBrightness(100), mIsActive(true)
 {
         QSettings settings;
-        mMode = settings.value("screensaver/mode", SS_MODE_OFF).toString();
+        mMode = settings.value(SET_MODE_PATH, SS_MODE_OFF).toString();
         mIdleTimer = new QTimer(this);
         mIdleTimer->setInterval(SS_ACT_DEL_MS);
         mIdleTimer->setSingleShot(true);
@@ -39,7 +42,7 @@ void ScreenSaver::setMode(const QString &mode)
         if (mode == mMode) { return; }
         mMode = mode;
         QSettings settings;
-        settings.setValue("screensaver/mode", mode);
+        settings.setValue(SET_MODE_PATH, mode);
         emit modeChanged();
 
         mIdleTimer->stop();

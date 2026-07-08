@@ -13,6 +13,8 @@ int main(int argc, char ** argv)
 {
         QApplication app(argc, argv);
         app.setApplicationName("power-window-app");
+        app.setApplicationVersion("1.0");
+        app.setOrganizationName("lago");
         QQmlApplicationEngine appEngine;
         Theme theme;
         qmlRegisterSingletonInstance("PowerWindow", 1, 0, "Theme", &theme);

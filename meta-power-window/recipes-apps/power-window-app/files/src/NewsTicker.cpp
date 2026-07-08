@@ -7,15 +7,32 @@
 #include <QSettings>
 #include "NewsTicker.hpp"
 
-#define NT_SET_NAME "news/feedUrl"
-#define NT_DEF_URL  "https://www.dnn.de/arc/outboundfeeds/rss/"
+#define SET_PATH          "NewsTicker/"
+#define SET_FEED_URL_PATH SET_PATH "feedUrl"
 #define NT_RFS_DEL  (30 * 60 * 1000)
 
 NewsTicker::NewsTicker(QObject * parent) : QObject(parent), mReady(false)
+        , mFeedUrls({
+                {"DNN", "https://www.dnn.de/arc/outboundfeeds/rss/"},
+                {"Sächsische", "https://www.saechsische.de/arc/outboundfeeds/rss/"},
+                {"Tagesschau", "https://www.tagesschau.de/infoservices/alle-meldungen-100~rss2.xml"},
+                {"FAZ", "https://www.faz.net/rss/aktuell/"}
+        })
 {
         mNet = new QNetworkAccessManager(this);
         QSettings settings;
-        mFeedUrl = settings.value(NT_SET_NAME, NT_DEF_URL).toString();
+        QString saved = settings.value(SET_FEED_URL_PATH, "").toString();
+        for (auto it = mFeedUrls.constBegin(); it != mFeedUrls.constEnd(); it++) {
+                if (it.value() == saved) {
+                        mCurrentFeed = it.key();
+                        break;
+                }
+        }
+        if (mCurrentFeed.isEmpty()) {
+                mCurrentFeed = mFeedUrls.firstKey();
+                saved = mFeedUrls.first();
+        }
+        mFeedUrl = saved;
         mRefreshTimer = new QTimer(this);
         mRefreshTimer->setInterval(NT_RFS_DEL);
         connect(mRefreshTimer, &QTimer::timeout, this, &NewsTicker::fetch);
@@ -38,7 +55,26 @@ void NewsTicker::setFeedUrl(const QString &url)
         if (url.isEmpty() || url == mFeedUrl) { return; }
         mFeedUrl = url;
         QSettings settings;
-        settings.setValue(NT_SET_NAME, url);
+        settings.setValue(SET_FEED_URL_PATH, url);
+        emit feedUrlChanged();
+        mHeadlines.clear();
+        mReady = false;
+        emit headlinesChanged();
+        fetch();
+}
+
+QStringList NewsTicker::feedNames() const { return mFeedUrls.keys(); }
+
+QString NewsTicker::currentFeed() const { return mCurrentFeed; }
+
+void NewsTicker::setCurrentFeed(const QString &name)
+{
+        if (name == mCurrentFeed ||!mFeedUrls.contains(name)) { return; }
+        mCurrentFeed = name;
+        mFeedUrl = mFeedUrls[name];
+        QSettings settings;
+        settings.setValue(SET_FEED_URL_PATH, mFeedUrl);
+        emit currentFeedChanged();
         emit feedUrlChanged();
         mHeadlines.clear();
         mReady = false;

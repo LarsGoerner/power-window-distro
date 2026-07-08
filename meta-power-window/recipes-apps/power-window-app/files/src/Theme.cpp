@@ -7,6 +7,9 @@
 #include <QStringList>
 #include "Theme.hpp"
 
+#define SET_PATH        "Theme/"
+#define SET_MODE_PATH   SET_PATH "theme"
+
 struct ThemeColors { const char * name, * bg, * fg, * accent; };
 
 constexpr std::array<ThemeColors, 8> THEMES {{
@@ -23,7 +26,7 @@ constexpr std::array<ThemeColors, 8> THEMES {{
 Theme::Theme(QObject * parent) : QObject(parent)
 {
         QSettings settings;
-        QString saved = settings.value("theme", THEMES[0].name).toString();
+        QString saved = settings.value(SET_MODE_PATH, THEMES[0].name).toString();
         applyTheme(themeData(saved));
         mCurrentTheme = saved;
 }
@@ -52,7 +55,7 @@ void Theme::setTheme(const QString &name)
         applyTheme(themeData(name));
         mCurrentTheme = name;
         QSettings settings;
-        settings.setValue("theme", name);
+        settings.setValue(SET_MODE_PATH, name);
         emit themeChanged();
 }
 
