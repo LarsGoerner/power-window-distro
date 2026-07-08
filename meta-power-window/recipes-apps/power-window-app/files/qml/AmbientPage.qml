@@ -9,17 +9,17 @@ Page {
     RowLayout {
         anchors.fill: parent
         anchors.margins: 24
-        spacing: 24
+        spacing: Theme.spacingL
 
         // --- Indoor ---
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            spacing: 18
+            spacing: Theme.spacingM
 
             Label {
                 text: "Raum"
-                font.pixelSize: 36
+                font.pixelSize: Theme.fontSizeXL
                 color: Theme.fgColor
             }
             RowLayout {
@@ -28,14 +28,14 @@ Page {
                     text: DhtSensor.temperature > 0
                           ? Math.round(DhtSensor.temperature) + "\u00B0C"
                           : "--\u00B0C"
-                    font.pixelSize: 30
+                    font.pixelSize: Theme.fontSizeL
                     color: Theme.fgColor
                 }
                 Label {
                     text: DhtSensor.humidity > 0
                           ? Math.round(DhtSensor.humidity) + "%"
                           : "--%"
-                    font.pixelSize: 30
+                    font.pixelSize: Theme.fontSizeL
                     color: Theme.fgColor
                 }
             }
@@ -54,15 +54,15 @@ Page {
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            spacing: 6
+            spacing: Theme.spacingS
 
             Label {
                 text: "Draußen"
-                font.pixelSize: 36
+                font.pixelSize: Theme.fontSizeXL
                 color: Theme.fgColor
             }
             RowLayout {
-                spacing: 8
+                spacing: Theme.spacingS
                 Image {
                     source: WeatherFetcher.ready
                             ? "file:///usr/share/power-window-app/weatherIcons/" + WeatherFetcher.iconCode + ".png"
@@ -71,24 +71,24 @@ Page {
                     sourceSize.height: 144
                 }
                 ColumnLayout {
-                    spacing: 2
+                    spacing: Theme.spacingS
                     Label {
                         text: WeatherFetcher.ready
                               ? Math.round(WeatherFetcher.temperature) + "°C"
                               : "--°C"
-                        font.pixelSize: 30
+                        font.pixelSize: Theme.fontSizeL
                         color: Theme.fgColor
                     }
                     Label {
                         text: WeatherFetcher.ready
                               ? WeatherFetcher.description
                               : "Lade..."
-                        font.pixelSize: 30
+                        font.pixelSize: Theme.fontSizeL
                         color: Theme.fgColor
                     }
                     Label {
                         text: WeatherFetcher.cityName
-                        font.pixelSize: 30
+                        font.pixelSize: Theme.fontSizeL
                         color: Theme.fgColor
                         opacity: 0.6
                         visible: WeatherFetcher.ready

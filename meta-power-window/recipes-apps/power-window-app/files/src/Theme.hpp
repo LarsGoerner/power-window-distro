@@ -15,6 +15,15 @@ class Theme : public QObject
         Q_PROPERTY(QStringList themes READ themes CONSTANT)
         Q_PROPERTY(QStringList themeDisplayNames READ themeDisplayNames CONSTANT)
 
+        Q_PROPERTY(int fontSizeS READ fontSizeS CONSTANT)
+        Q_PROPERTY(int fontSizeM READ fontSizeM CONSTANT)
+        Q_PROPERTY(int fontSizeL READ fontSizeL CONSTANT)
+        Q_PROPERTY(int fontSizeXL READ fontSizeXL CONSTANT)
+        
+        Q_PROPERTY(int spacingS READ spacingS CONSTANT)
+        Q_PROPERTY(int spacingM READ spacingM CONSTANT)
+        Q_PROPERTY(int spacingL READ spacingL CONSTANT)
+
 public:
         explicit Theme(QObject * parent = nullptr);
 
@@ -23,6 +32,15 @@ public:
         QColor accentColor() const;
         QString currentTheme() const;
         QStringList themes() const;
+
+        int fontSizeS() const { return 18; }
+        int fontSizeM() const { return 24; }
+        int fontSizeL() const { return 30; }
+        int fontSizeXL() const { return 36; }
+
+        int spacingS() const { return 6; }
+        int spacingM() const { return 12; }
+        int spacingL() const { return 24; }
 
         Q_INVOKABLE void setTheme(const QString &name);
         Q_INVOKABLE void setThemeByIndex(int idx);

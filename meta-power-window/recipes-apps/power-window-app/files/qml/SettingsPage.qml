@@ -13,10 +13,10 @@ Page {
             implicitHeight: 60
             topPadding: 0
             bottomPadding: 0
-            TabButton { text: "Display"; font.pixelSize: 24; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
-            TabButton { text: "WiFi";    font.pixelSize: 24; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
-            TabButton { text: "Growatt"; font.pixelSize: 24; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
-            TabButton { text: "Update";  font.pixelSize: 24; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
+            TabButton { text: "Display"; font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
+            TabButton { text: "WiFi";    font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
+            TabButton { text: "Growatt"; font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
+            TabButton { text: "Update";  font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
         }
         StackLayout {
             Layout.fillWidth: true

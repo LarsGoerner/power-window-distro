@@ -9,17 +9,16 @@ Page {
     ChartView {
         id: chart
         anchors.fill: parent
-        anchors.margins: 6
         backgroundColor: "transparent"
         legend.visible: false
         legend.labelColor: Theme.fgColor
-        legend.font.pixelSize: 18
+        legend.font.pixelSize: Theme.fontSizeM
         legend.alignment: Qt.AlignBottom
         antialiasing: false
         BarCategoryAxis {
             id: dateAxis
             gridVisible: false
-            labelsFont.pixelSize: 18
+            labelsFont.pixelSize: Theme.fontSizeS
             labelsColor: Theme.fgColor
         }
         ValueAxis {
@@ -33,11 +32,11 @@ Page {
             min: 0
             max: 30
             titleText: "Temperatur [°C]"
-            titleFont.pixelSize: 18
+            titleFont.pixelSize: Theme.fontSizeS
             titleFont.bold: false
             titleBrush: Theme.fgColor
             labelFormat: "%.0f"
-            labelsFont.pixelSize: 18
+            labelsFont.pixelSize: Theme.fontSizeS
             labelsColor: Theme.fgColor
             gridLineColor: Theme.accentColor
         }
@@ -46,11 +45,11 @@ Page {
             min: 0
             max: 10
             titleText: "Niederschlag [mm]"
-            titleFont.pixelSize: 18
+            titleFont.pixelSize: Theme.fontSizeS
             titleFont.bold: false
             titleBrush: Theme.fgColor
             labelFormat: "%.0f"
-            labelsFont.pixelSize: 18
+            labelsFont.pixelSize: Theme.fontSizeS
             labelsColor: Theme.fgColor
             gridVisible: false
         }

@@ -6,27 +6,26 @@ import PowerWindow 1.0
 Item {
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 0
-        spacing: 6
+        spacing: Theme.spacingS
         RowLayout {
             Button {
                 text: "Scan"
                 enabled: !WifiManager.scanning && !WifiManager.connecting
-                font.pixelSize: 18
+                font.pixelSize: Theme.fontSizeS
                 implicitHeight: 36
                 onClicked: WifiManager.startScan()
             }
             Label {
                 text: WifiManager.statusMessage
                 color: Theme.fgColor
-                font.pixelSize: 18
+                font.pixelSize: Theme.fontSizeS
                 Layout.fillWidth: true
             }
         }
         ComboBox {
             id: ssidCombo
             model: WifiManager.scanResults
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeS
             implicitHeight: 36
             Layout.fillWidth: true
         }
@@ -34,7 +33,7 @@ Item {
             id: passwordField
             placeholderText: "Password"
             echoMode: TextInput.Password
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeS
             implicitHeight: 36
             Layout.fillWidth: true
             topPadding: 6
@@ -43,7 +42,7 @@ Item {
         Button {
             text: "Connect"
             enabled: ssidCombo.currentIndex >= 0 && passwordField.text.length > 0
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeS
             implicitHeight: 36
             Layout.alignment: Qt.AlignHCenter
             onClicked: WifiManager.connectToNetwork(ssidCombo.currentText, passwordField.text)

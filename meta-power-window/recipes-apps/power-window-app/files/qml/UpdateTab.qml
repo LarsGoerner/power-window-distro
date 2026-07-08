@@ -6,11 +6,10 @@ import PowerWindow 1.0
 Item {
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 6
-        spacing: 6
+        spacing: Theme.spacingS
         Button {
                 text: "Update"
-                font.pixelSize: 24
+                font.pixelSize: Theme.fontSizeM
                 implicitHeight: 48
                 Layout.alignment: Qt.AlignHCenter
                 enabled: !Updater.updateRunning
@@ -22,7 +21,7 @@ Item {
             TextArea {
                 text: Updater.updateLog
                 readOnly: true
-                font.pixelSize: 18
+                font.pixelSize: Theme.fontSizeM
                 font.family: "monospace"
                 color: Theme.fgColor
                 background: Rectangle {

@@ -6,12 +6,11 @@ import PowerWindow 1.0
 Item {
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 12
-        spacing: 12
+        spacing: Theme.spacingM
         // Brightness
         Label {
             text: "Brightness"
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeM
             color: Theme.fgColor
         }
         RowLayout {
@@ -30,17 +29,17 @@ Item {
         // Theme
         Label {
             text: "Theme"
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeM
             color: Theme.fgColor
         }
         RowLayout {
             Layout.fillWidth: true
-            spacing: 6
+            spacing: Theme.spacingS
             Repeater {
                 model: Theme.themeDisplayNames
                 delegate: Button {
                     text: modelData
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeS
                     implicitHeight: 42
                     Layout.fillWidth: true
                     highlighted: Theme.currentTheme === Theme.themes[index]
@@ -51,11 +50,11 @@ Item {
         // Screensaver
         Label {
             text: "Screensaver"
-            font.pixelSize: 18;
+            font.pixelSize: Theme.fontSizeM;
             color: Theme.fgColor
         }
         RowLayout {
-            spacing: 6
+            spacing: Theme.spacingS
             Layout.fillWidth: true
             ButtonGroup { id: ssGroup }
             RadioButton {
@@ -63,8 +62,8 @@ Item {
                 id: offRadio
                 Layout.fillWidth: true
                 implicitHeight: 30
-                spacing: 6
-                font.pixelSize: 18
+                spacing: Theme.spacingS
+                font.pixelSize: Theme.fontSizeM
                 ButtonGroup.group: ssGroup
                 checked: ScreenSaver.mode === "off"
                 onClicked: ScreenSaver.mode = "off"
@@ -82,8 +81,8 @@ Item {
                 id: dimRadio
                 Layout.fillWidth: true
                 implicitHeight: 30
-                spacing: 6
-                font.pixelSize: 18
+                spacing: Theme.spacingS
+                font.pixelSize: Theme.fontSizeM
                 ButtonGroup.group: ssGroup
                 checked: ScreenSaver.mode === "dim"
                 onClicked: ScreenSaver.mode = "dim"
@@ -101,8 +100,8 @@ Item {
                 id: maxRadio
                 Layout.fillWidth: true
                 implicitHeight: 30
-                spacing: 6
-                font.pixelSize: 18
+                spacing: Theme.spacingS
+                font.pixelSize: Theme.fontSizeM
                 ButtonGroup.group: ssGroup
                 checked: ScreenSaver.mode === "full"
                 onClicked: ScreenSaver.mode = "full"
