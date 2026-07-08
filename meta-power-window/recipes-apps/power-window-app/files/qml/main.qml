@@ -26,7 +26,7 @@ ApplicationWindow {
         currentIndex: view.currentIndex
         anchors.bottom: view.bottom
         anchors.horizontalCenter: view.horizontalCenter
-        anchors.bottomMargin: 15
+        anchors.bottomMargin: 45
     }
 
     InputPanel {

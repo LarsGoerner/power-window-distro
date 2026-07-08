@@ -10,13 +10,13 @@ Page {
         TabBar {
             id: settingsTabs
             Layout.fillWidth: true
-            implicitHeight: 20
+            implicitHeight: 60
             topPadding: 0
             bottomPadding: 0
-            TabButton { text: "Display"; font.pixelSize: 8; topPadding: 2; bottomPadding: 2; implicitHeight: 20 }
-            TabButton { text: "WiFi"; font.pixelSize: 8; topPadding: 2; bottomPadding: 2; implicitHeight: 20 }
-            TabButton { text: "Growatt"; font.pixelSize: 8; topPadding: 2; bottomPadding: 2; implicitHeight: 20 }
-            TabButton { text: "Update"; font.pixelSize: 8; topPadding: 2; bottomPadding: 2; implicitHeight: 20 }
+            TabButton { text: "Display"; font.pixelSize: 24; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
+            TabButton { text: "WiFi";    font.pixelSize: 24; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
+            TabButton { text: "Growatt"; font.pixelSize: 24; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
+            TabButton { text: "Update";  font.pixelSize: 24; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
         }
         StackLayout {
             Layout.fillWidth: true

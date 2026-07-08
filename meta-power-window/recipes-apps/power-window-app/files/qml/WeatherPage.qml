@@ -9,21 +9,17 @@ Page {
     ChartView {
         id: chart
         anchors.fill: parent
-        anchors.margins: 2
+        anchors.margins: 6
         backgroundColor: "transparent"
         legend.visible: false
         legend.labelColor: Theme.fgColor
-        legend.font.pixelSize: 6
+        legend.font.pixelSize: 18
         legend.alignment: Qt.AlignBottom
         antialiasing: false
-        margins.top: 0
-        margins.left: 0
-        margins.right: 0
-        margins.bottom: 0
         BarCategoryAxis {
             id: dateAxis
             gridVisible: false
-            labelsFont.pixelSize: 6
+            labelsFont.pixelSize: 18
             labelsColor: Theme.fgColor
         }
         ValueAxis {
@@ -37,11 +33,11 @@ Page {
             min: 0
             max: 30
             titleText: "Temperatur [°C]"
-            titleFont.pixelSize: 6
+            titleFont.pixelSize: 18
             titleFont.bold: false
             titleBrush: Theme.fgColor
             labelFormat: "%.0f"
-            labelsFont.pixelSize: 6
+            labelsFont.pixelSize: 18
             labelsColor: Theme.fgColor
             gridLineColor: Theme.accentColor
         }
@@ -50,11 +46,11 @@ Page {
             min: 0
             max: 10
             titleText: "Niederschlag [mm]"
-            titleFont.pixelSize: 6
+            titleFont.pixelSize: 18
             titleFont.bold: false
             titleBrush: Theme.fgColor
             labelFormat: "%.0f"
-            labelsFont.pixelSize: 6
+            labelsFont.pixelSize: 18
             labelsColor: Theme.fgColor
             gridVisible: false
         }
@@ -73,7 +69,7 @@ Page {
             id: maxTLine
             name: "Max"
             color: Theme.fgColor
-            width: 2
+            width: 6
             pointsVisible: true
             pointLabelsVisible: false
             axisX: hiddenX
@@ -83,7 +79,7 @@ Page {
             id: minTLine
             name: "Min"
             color: Theme.fgColor
-            width: 2
+            width: 6
             pointsVisible: true
             pointLabelsVisible: false
             axisX: hiddenX
