@@ -6,7 +6,8 @@ import PowerWindow 1.0
 Item {
     ColumnLayout {
         anchors.fill: parent
-        spacing: Theme.spacingS
+        spacing: Theme.spacingL
+        anchors.margins: Theme.spacingL
         RowLayout {
             Button {
                 text: "Scan"

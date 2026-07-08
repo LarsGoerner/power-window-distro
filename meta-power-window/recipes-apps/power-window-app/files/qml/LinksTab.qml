@@ -6,8 +6,8 @@ import PowerWindow 1.0
 Item {
     ColumnLayout {
         anchors.fill: parent
+        spacing: Theme.spacingL
         anchors.margins: Theme.spacingL
-        spacing: Theme.spacingM
         Label {
             text: "News Feed URL"
             font.pixelSize: Theme.fontSizeM

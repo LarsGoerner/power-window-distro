@@ -6,7 +6,8 @@ import PowerWindow 1.0
 Item {
     ColumnLayout {
         anchors.fill: parent
-        spacing: Theme.spacingS
+        spacing: Theme.spacingL
+        anchors.margins: Theme.spacingL
         Button {
                 text: "Update"
                 font.pixelSize: Theme.fontSizeM

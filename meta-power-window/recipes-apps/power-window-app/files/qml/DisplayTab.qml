@@ -6,7 +6,8 @@ import PowerWindow 1.0
 Item {
     ColumnLayout {
         anchors.fill: parent
-        spacing: Theme.spacingM
+        spacing: Theme.spacingL
+        anchors.margins: Theme.spacingL
         // Brightness
         Label {
             text: "Brightness"
@@ -27,24 +28,29 @@ Item {
             }
         }
         // Theme
-        Label {
-            text: "Theme"
-            font.pixelSize: Theme.fontSizeM
-            color: Theme.fgColor
-        }
         RowLayout {
             Layout.fillWidth: true
             spacing: Theme.spacingS
-            Repeater {
-                model: Theme.themeDisplayNames
-                delegate: Button {
-                    text: modelData
-                    font.pixelSize: Theme.fontSizeS
-                    implicitHeight: 42
-                    Layout.fillWidth: true
-                    highlighted: Theme.currentTheme === Theme.themes[index]
-                    onClicked: Theme.setThemeByIndex(index)
+            Label {
+                text: "Theme"
+                font.pixelSize: Theme.fontSizeM
+                color: Theme.fgColor
+            }
+            ComboBox {
+                id: themeCombo
+                Layout.fillWidth: true
+                implicitHeight: 42
+                model: Theme.themeNames
+                font.pixelSize: Theme.fontSizeM
+                currentIndex: {
+                    var names = Theme.themeNames
+                    var cur = Theme.currentTheme
+                    for (var i = 0; i < names.length; i++) {
+                        if (names[i] === cur) return i
+                    }
+                    return 0
                 }
+                onActivated: Theme.setThemeByIndex(index)
             }
         }
         // Screensaver

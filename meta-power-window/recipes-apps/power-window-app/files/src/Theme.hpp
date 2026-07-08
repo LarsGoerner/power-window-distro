@@ -12,8 +12,7 @@ class Theme : public QObject
         Q_PROPERTY(QColor fgColor READ fgColor NOTIFY themeChanged)
         Q_PROPERTY(QColor accentColor READ accentColor NOTIFY themeChanged)
         Q_PROPERTY(QString currentTheme READ currentTheme NOTIFY themeChanged)
-        Q_PROPERTY(QStringList themes READ themes CONSTANT)
-        Q_PROPERTY(QStringList themeDisplayNames READ themeDisplayNames CONSTANT)
+        Q_PROPERTY(QStringList themeNames READ themeNames CONSTANT)
 
         Q_PROPERTY(int fontSizeS READ fontSizeS CONSTANT)
         Q_PROPERTY(int fontSizeM READ fontSizeM CONSTANT)
@@ -31,12 +30,12 @@ public:
         QColor fgColor() const;
         QColor accentColor() const;
         QString currentTheme() const;
-        QStringList themes() const;
+        QStringList themeNames() const;
 
-        int fontSizeS() const { return 18; }
-        int fontSizeM() const { return 24; }
-        int fontSizeL() const { return 30; }
-        int fontSizeXL() const { return 36; }
+        int fontSizeS() const { return 22; }
+        int fontSizeM() const { return 28; }
+        int fontSizeL() const { return 34; }
+        int fontSizeXL() const { return 42; }
 
         int spacingS() const { return 6; }
         int spacingM() const { return 12; }
@@ -44,7 +43,6 @@ public:
 
         Q_INVOKABLE void setTheme(const QString &name);
         Q_INVOKABLE void setThemeByIndex(int idx);
-        QStringList themeDisplayNames() const;
 
 signals:
         void themeChanged();
