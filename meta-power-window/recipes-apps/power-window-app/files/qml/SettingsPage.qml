@@ -16,6 +16,7 @@ Page {
             TabButton { text: "Display"; font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
             TabButton { text: "WiFi";    font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
             TabButton { text: "Growatt"; font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
+            TabButton { text: "Links";   font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
             TabButton { text: "Update";  font.pixelSize: Theme.fontSizeL; topPadding: 6; bottomPadding: 6; implicitHeight: 60 }
         }
         StackLayout {
@@ -25,6 +26,7 @@ Page {
             DisplayTab {}
             WifiTab {}
             GrowattTab {}
+            LinksTab {}
             UpdateTab {}
         }
     }

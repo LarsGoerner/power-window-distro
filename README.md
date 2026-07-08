@@ -103,6 +103,7 @@ cp -r build/tmp-glibc/deploy/ipk/* <UPDATE PACKAGES DIR>
   - [ ] Power data feature
     - [ ] Power data fetch
     - [ ] Power data presentation
+  - [x] News Feed
 
 ## Write SD Card
 

@@ -7,6 +7,7 @@
 #include "DhtSensor.hpp"
 #include "WeatherFetcher.hpp"
 #include "ScreenSaver.hpp"
+#include "NewsTicker.hpp"
 
 int main(int argc, char ** argv)
 {
@@ -28,6 +29,9 @@ int main(int argc, char ** argv)
         weatherFetcher.start();
         ScreenSaver screenSaver(&backlight);
         qmlRegisterSingletonInstance("PowerWindow", 1, 0, "ScreenSaver", &screenSaver);
+        NewsTicker newsTicker;
+        qmlRegisterSingletonInstance("PowerWindow", 1, 0, "NewsTicker", &newsTicker);
+        newsTicker.start();
 
         // load qml file into binary resource system
         const QUrl url(QStringLiteral("qrc:/qml/main.qml"));

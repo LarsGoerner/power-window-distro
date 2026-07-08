@@ -8,5 +8,7 @@
         <file>qml/WifiTab.qml</file>
         <file>qml/GrowattTab.qml</file>
         <file>qml/UpdateTab.qml</file>
+        <file>qml/NewsTickerPage.qml</file>
+        <file>qml/LinksTab.qml</file>
     </qresource>
 </RCC>

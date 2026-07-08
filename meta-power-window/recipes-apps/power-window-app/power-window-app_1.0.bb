@@ -10,10 +10,12 @@ SRC_URI += "\
     file://qml/AmbientPage.qml \
     file://qml/WeatherPage.qml \
     file://qml/SettingsPage.qml \
+    file://qml/NewsTickerPage.qml \
     file://qml/DisplayTab.qml \
     file://qml/WifiTab.qml \
     file://qml/GrowattTab.qml \
     file://qml/UpdateTab.qml \
+    file://qml/LinksTab.qml \
     file://src/Theme.hpp file://src/Theme.cpp \
     file://src/Backlight.hpp file://src/Backlight.cpp \
     file://src/Updater.hpp file://src/Updater.cpp \
@@ -21,6 +23,7 @@ SRC_URI += "\
     file://src/DhtSensor.hpp file://src/DhtSensor.cpp \
     file://src/WeatherFetcher.hpp file://src/WeatherFetcher.cpp \
     file://src/ScreenSaver.hpp file://src/ScreenSaver.cpp \
+    file://src/NewsTicker.hpp file://src/NewsTicker.cpp \
     file://resources.qrc \
     file://power-window-app.pro \
     file://power-window-app.service \

@@ -17,6 +17,7 @@ ApplicationWindow {
         currentIndex: indicator.currentIndex
         AmbientPage {}
         WeatherPage {}
+        NewsTickerPage {}
         SettingsPage{}
     }
 
