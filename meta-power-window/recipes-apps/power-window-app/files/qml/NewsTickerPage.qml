@@ -25,9 +25,7 @@ Page {
             width: list.width
             height: list.height
             ColumnLayout {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.right: parent.right
+                anchors.fill: parent
                 spacing: Theme.spacingM
                 Label {
                     text: modelData.title || ""
@@ -35,16 +33,37 @@ Page {
                     color: Theme.fgColor
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignTop
                 }
-                Label {
-                    text: modelData.description || ""
-                    font.pixelSize: Theme.fontSizeL
-                    color: Theme.fgColor
-                    opacity: 0.8
-                    wrapMode: Text.WordWrap
+                Rectangle {
+                    color: Theme.accentColor
+                    opacity: 0.3
+                    height: 1
                     Layout.fillWidth: true
-                    maximumLineCount: 8
-                    elide: Text.ElideRight
+                }
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Label {
+                        text: modelData.description || ""
+                        font.pixelSize: Theme.fontSizeL
+                        color: Theme.fgColor
+                        opacity: 0.8
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    Image {
+                        source: modelData.imageUrl || ""
+                        fillMode: Image.PreserveAspectFit
+                        asynchronous: true
+                        visible: status !== Image.Error
+                              && status !== Image.Null
+                              && modelData.imageUrl
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.alignment: Qt.AlignVCenter
+                    }
                 }
             }
         }

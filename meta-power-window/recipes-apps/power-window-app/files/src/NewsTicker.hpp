@@ -32,6 +32,7 @@ private:
         QTimer * mRefreshTimer;
         QString mFeedUrl;
         QVariantList mHeadlines;
+        QString mCurrentImageUrl;
         bool mReady;
 };
 

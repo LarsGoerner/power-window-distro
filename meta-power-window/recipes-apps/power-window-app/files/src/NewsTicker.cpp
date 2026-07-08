@@ -72,12 +72,18 @@ void NewsTicker::parse(const QByteArray &xml)
                                 title = sr.readElementText().trimmed();
                         } else if (sr.name().toString() == "description") {
                                 description = sr.readElementText().trimmed();
+                        } else if (sr.namespaceUri().toString() == "http://search.yahoo.com/mrss/"
+                                   && sr.name().toString() == "content") {
+                                QString url = sr.attributes().value("url").toString();
+                                if (url.startsWith("https://")) { mCurrentImageUrl = url; }
                         }
                 } else if (sr.isEndElement() && sr.name().toString() == "item") {
                         if (!title.isEmpty()) {
                                 QVariantMap item;
                                 item["title"] = title;
                                 item["description"] = description;
+                                if (!mCurrentImageUrl.isEmpty()) { item["imageUrl"] = mCurrentImageUrl; }
+                                mCurrentImageUrl.clear();
                                 mHeadlines.append(item);
                         }
                 }
