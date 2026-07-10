@@ -20,8 +20,8 @@ PREFERRED_VERSION_linux-rockchip-rk3506 = "6.1%"
 # In-tree defconfig shipped by the vendor kernel tree.
 KBUILD_DEFCONFIG = "rk3506_defconfig"
 
-SERIAL_CONSOLES = "115200;ttyFIQ0"
-KERNEL_CONSOLE = "ttyFIQ0,115200"
+SERIAL_CONSOLES = "115200;ttyS0"
+KERNEL_CONSOLE = "ttyS0,115200"
 
 # rkbin blob / U-Boot config fragment selection for the RK3506 SoC family.
 # Boards override these in their machine conf:

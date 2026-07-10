@@ -31,6 +31,13 @@ SRC_URI = "\
     file://wifi-bt.cfg \
     file://esp32-c6.cfg \
     file://dht11.cfg \
+    file://powersave.cfg \
+    file://disable-audio.cfg \
+    file://disable-bt.cfg \
+    file://disable-debug.cfg \
+    file://disable-unused-fs.cfg \
+    file://disable-unused-net.cfg \
+    file://disable-usb.cfg \
     file://0001-add-waveshare-dsi-backlight-driver.patch \
     file://0002-goodix-touch-poll-mode.patch \
     file://0003-allow-non-zero-decimals.patch \

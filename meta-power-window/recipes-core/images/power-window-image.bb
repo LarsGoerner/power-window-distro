@@ -18,17 +18,16 @@ IMAGE_INSTALL = " \
     packagegroup-power-window-display \
     packagegroup-power-window-network \
     kernel-modules \
-    alsa-utils \
     optee-client \
     i2c-tools \
-    linux-firmware \
     screen \
     psplash \
     nano \
 "
 
 # QT5
-IMAGE_INSTALL += "qtbase qtdeclarative qtdeclarative-qmlplugins qtquickcontrols2 qtwayland"
+IMAGE_INSTALL += "qtbase qtdeclarative qtdeclarative-qmlplugins qtquickcontrols2"
+#IMAGE_INSTALL += "qtwayland"
 IMAGE_INSTALL += "qtvirtualkeyboard qtvirtualkeyboard-qmlplugins"
 IMAGE_INSTALL += "ca-certificates openssl"
 IMAGE_INSTALL += "ttf-dejavu-sans"

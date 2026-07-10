@@ -11,7 +11,7 @@
     compatible = "power-window", "rockchip,rk3506";
 
     chosen {
-        bootargs = "earlycon=uart8250,mmio32,0xff0a0000 console=ttyFIQ0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait panic=10 clk_ignore_unused";
+        bootargs = "earlycon=uart8250,mmio32,0xff0a0000 console=ttyS0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait panic=10 clk_ignore_unused";
     };
 
     extcon_usb: extcon-usb {
@@ -67,6 +67,8 @@
         pinctrl-names = "default";
     };
 };
+
+&uart0 { status = "okay"; };
 
 /* == DISPLAY =============================================================== */
 
