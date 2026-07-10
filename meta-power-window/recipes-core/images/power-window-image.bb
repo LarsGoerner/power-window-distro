@@ -23,6 +23,7 @@ IMAGE_INSTALL = " \
     screen \
     psplash \
     nano \
+    tzdata \
 "
 
 # QT5
@@ -92,6 +93,12 @@ configure_tmpfs_size() {
 [Mount]
 Options=mode=1777,nosuid,nodev,size=256M
 EOF
+}
+
+# SET DEFAULT TIMEZONE
+ROOTFS_POSTPROCESS_COMMAND += "set_timezone;"
+set_timezone() {
+    ln -sf /usr/share/zoneinfo/Europe/Berlin ${IMAGE_ROOTFS}/etc/localtime
 }
 
 
