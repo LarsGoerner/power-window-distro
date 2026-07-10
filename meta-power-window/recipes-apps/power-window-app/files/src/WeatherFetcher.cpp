@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QProcess>
 #include "WeatherFetcher.hpp"
 
 #define POLL_DELAY_MS                   60000
@@ -17,6 +18,8 @@
                                     "?lat=%1&lon=%2&appid=%3&units=metric"
 #define OWM_FORECAST_API_TMP_URL "https://api.openweathermap.org/data/2.5/forecast" \
                                     "?lat=%1&lon=%2&appid=%3&units=metric"
+#define TZ_DIR          "/usr/share/zoneinfo/"
+#define TZ_LOCAL        "/etc/localtime"
 
 WeatherFetcher::WeatherFetcher(QObject * parent) : QObject(parent)
 {
@@ -34,19 +37,17 @@ void WeatherFetcher::start()
 }
 
 double WeatherFetcher::temperature() const { return mTemperature; }
-
+double WeatherFetcher::feelTemperature() const { return mFeelTemperature; }
 double WeatherFetcher::humidity() const { return mHumidity; }
-
+int WeatherFetcher::pressure() const { return mPressure; }
+double WeatherFetcher::windSpeed() const { return mWindSpeed; }
+double WeatherFetcher::windGust() const { return mWindGust; }
+int WeatherFetcher::windDirection() const { return mWindDirection; }
 QString WeatherFetcher::description() const { return mDescription; }
-
 QString WeatherFetcher::iconCode() const { return mIconCode; }
-
 QString WeatherFetcher::cityName() const { return mCity; }
-
 QVariantList WeatherFetcher::forecast() const { return mForecast; }
-
 QVariantList WeatherFetcher::todayForecast() const { return mTodayForecast; }
-
 bool WeatherFetcher::ready() const { return mReady; }
 
 void WeatherFetcher::refresh()
@@ -80,6 +81,8 @@ void WeatherFetcher::fetchLocation()
                         mLat = obj["lat"].toDouble();
                         mLon = obj["lon"].toDouble();
                         mCity = obj["city"].toString();
+                        QString tz = obj["timezone"].toString();
+                        if (!tz.isEmpty()) { QProcess::execute("ln", { "-sf", TZ_DIR + tz, TZ_LOCAL }); }
                         fetchCurrentWeather();
                         fetchWeatherForecast();
                 } else {
@@ -119,7 +122,12 @@ void WeatherFetcher::parseCurrentWeather(const QByteArray &data)
         if (obj.isEmpty()) { return; }
         
         mTemperature = obj["main"].toObject()["temp"].toDouble();
+        mFeelTemperature = obj["main"].toObject()["feels_like"].toDouble();
         mHumidity = obj["main"].toObject()["humidity"].toInt();
+        mPressure = obj["main"].toObject()["pressure"].toInt();
+        mWindSpeed = obj["wind"].toObject()["speed"].toDouble();
+        mWindGust = obj["wind"].toObject()["gust"].toDouble();
+        mWindDirection = obj["wind"].toObject()["deg"].toInt();
         mDescription = obj["weather"].toArray()[0].toObject()["description"].toString();
         mIconCode = obj["weather"].toArray()[0].toObject()["icon"].toString();
 
