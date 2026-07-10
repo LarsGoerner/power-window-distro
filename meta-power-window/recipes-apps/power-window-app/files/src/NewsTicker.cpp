@@ -107,7 +107,9 @@ void NewsTicker::parse(const QByteArray &xml)
                         } else if (sr.name().toString() == "title") {
                                 title = sr.readElementText().trimmed();
                         } else if (sr.name().toString() == "description") {
-                                description = sr.readElementText().trimmed();
+                                if (description.isEmpty()) { // use only the first description node
+                                        description = sr.readElementText().trimmed();
+                                }
                         } else if (sr.namespaceUri().toString() == "http://search.yahoo.com/mrss/"
                                    && sr.name().toString() == "content") {
                                 QString url = sr.attributes().value("url").toString();
