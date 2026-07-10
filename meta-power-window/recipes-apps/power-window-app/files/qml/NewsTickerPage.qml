@@ -40,10 +40,11 @@ Page {
                     opacity: 0.3
                     height: 1
                     Layout.fillWidth: true
+                    Layout.topMargin: Theme.spacingL
+                    Layout.bottomMargin: Theme.spacingL
                 }
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.fillHeight: true
                     Label {
                         text: modelData.description || ""
                         font.pixelSize: Theme.fontSizeL
@@ -51,20 +52,22 @@ Page {
                         opacity: 0.8
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignVCenter
+                        Layout.alignment: Qt.AlignTop
                     }
                     Image {
                         source: modelData.imageUrl || ""
                         fillMode: Image.PreserveAspectFit
+                        smooth: true
                         asynchronous: true
                         visible: status !== Image.Error
                               && status !== Image.Null
                               && modelData.imageUrl
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        Layout.alignment: Qt.AlignVCenter
+                        Layout.preferredWidth: list.width * 0.45
+                        Layout.preferredHeight: list.height * 0.6
+                        Layout.alignment: Qt.AlignTop
                     }
                 }
+                Item { Layout.fillHeight: true } // spacer
             }
         }
         Label {
