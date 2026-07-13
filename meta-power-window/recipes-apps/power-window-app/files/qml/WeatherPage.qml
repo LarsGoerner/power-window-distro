@@ -35,7 +35,7 @@ Page {
             titleFont.pixelSize: Theme.fontSizeS
             titleFont.bold: false
             titleBrush: Theme.fgColor
-            labelFormat: "%.0f"
+            labelFormat: "%d"
             labelsFont.pixelSize: Theme.fontSizeS
             labelsColor: Theme.fgColor
             gridLineColor: Theme.accentColor
@@ -43,12 +43,12 @@ Page {
         ValueAxis {
             id: rainAxis
             min: 0
-            max: 10
+            max: 100
             titleText: "Niederschlag [mm]"
             titleFont.pixelSize: Theme.fontSizeS
             titleFont.bold: false
             titleBrush: Theme.fgColor
-            labelFormat: "%.0f"
+            labelFormat: "%d"
             labelsFont.pixelSize: Theme.fontSizeS
             labelsColor: Theme.fgColor
             gridVisible: false
@@ -104,7 +104,6 @@ Page {
         hiddenX.max = n - 0.3
         tempAxis.min = lo - pad
         tempAxis.max = hi + pad
-        rainAxis.max = 10
 
         var cats = []
         for (var i = 0; i < n; i++) { cats.push(p[i].day) }
