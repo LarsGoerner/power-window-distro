@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
+
 #include "Theme.hpp"
 #include "Backlight.hpp"
 #include "Updater.hpp"
@@ -8,6 +9,7 @@
 #include "WeatherFetcher.hpp"
 #include "ScreenSaver.hpp"
 #include "NewsTicker.hpp"
+#include "Windrose.hpp"
 
 int main(int argc, char ** argv)
 {
@@ -34,6 +36,8 @@ int main(int argc, char ** argv)
         NewsTicker newsTicker;
         qmlRegisterSingletonInstance("PowerWindow", 1, 0, "NewsTicker", &newsTicker);
         newsTicker.start();
+        
+        qmlRegisterType<Windrose>("PowerWindow", 1, 0, "Windrose");
 
         // load qml file into binary resource system
         const QUrl url(QStringLiteral("qrc:/qml/main.qml"));

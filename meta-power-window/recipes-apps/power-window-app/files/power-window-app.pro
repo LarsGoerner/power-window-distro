@@ -11,7 +11,8 @@ SOURCES += \
         src/DhtSensor.cpp \
         src/WeatherFetcher.cpp \
         src/ScreenSaver.cpp \
-        src/NewsTicker.cpp
+        src/NewsTicker.cpp \
+        src/Windrose.cpp
 
 HEADERS += \
         src/Theme.hpp \
@@ -21,7 +22,8 @@ HEADERS += \
         src/DhtSensor.hpp \
         src/WeatherFetcher.hpp \
         src/ScreenSaver.hpp \
-        src/NewsTicker.hpp
+        src/NewsTicker.hpp \
+        src/Windrose.hpp
 
 RESOURCES += resources.qrc
 

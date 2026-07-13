@@ -24,6 +24,7 @@ SRC_URI += "\
     file://src/WeatherFetcher.hpp file://src/WeatherFetcher.cpp \
     file://src/ScreenSaver.hpp file://src/ScreenSaver.cpp \
     file://src/NewsTicker.hpp file://src/NewsTicker.cpp \
+    file://src/Windrose.hpp file://src/Windrose.cpp \
     file://resources.qrc \
     file://power-window-app.pro \
     file://power-window-app.service \
