@@ -17,6 +17,9 @@ This layer includes the Power Window Application and it's dependencies and provi
 - **Display:** Waveshare 5-DSI-TOUCH-A
   - **Size:** 5 inch
   - **Resolution:** 720 x 1280
+- **Temperature/Humidity Sensor:**
+  - **Temperature:** 0..50°C +- 2°C
+  - **Humidity:** 20..90%RH +- 5%RH
 
 ### Hardware Block Diagram
 
@@ -25,7 +28,9 @@ flowchart LR
         MCU("Lyra\n(RK3506G2)")
         DSP("Display\n(5-DSI-TOUCH-A)")
         WIFI("WiFi\n(ESP32-C6)")
+        TH("Temp/Humidity Sensor\n(DHT11)")
 
+        TH --> MCU
         MCU -- MIPI DSI --> DSP
         MCU <-- I2C --> DSP
         MCU <-- SPI/GPIO --> WIFI
@@ -44,6 +49,12 @@ flowchart LR
 | Handshake  | IO3  | GPIO0_B2 |
 | Data Ready | IO4  | GPIO0_B1 |
 | Reset      | RST  | GPIO0_B0 |
+
+#### DHT11 Sensor
+
+| Function | DHT11 | Lyra     |
+| :--:     | :--:  | :--:     |
+| Data     | Data  | GPIO1_B1 |
 
 #### 5-DSI-TOUCH-A display
 
@@ -71,6 +82,12 @@ cd power-window-distro
 
 ```bash
 kas build kas-project.yml
+```
+
+or
+
+```bash
+kas shell kas-project.yml -c "bitbake <PACKAGE NAME>"
 ```
 
 3. Create package index files for opkg updates
