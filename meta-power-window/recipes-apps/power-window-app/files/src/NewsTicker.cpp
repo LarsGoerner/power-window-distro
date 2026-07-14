@@ -7,9 +7,10 @@
 #include <QSettings>
 #include "NewsTicker.hpp"
 
-#define SET_PATH          "NewsTicker/"
-#define SET_FEED_URL_PATH SET_PATH "feedUrl"
-#define NT_RFS_DEL  (30 * 60 * 1000)
+#define SET_PATH                "NewsTicker/"
+#define SET_FEED_URL_PATH       SET_PATH "feedUrl"
+#define NT_RFS_DEL_MS           (30 * 60 * 1000)
+#define NT_POLL_RETRY_DEL_MS    (30 * 1000)
 
 NewsTicker::NewsTicker(QObject * parent) : QObject(parent), mReady(false)
         , mFeedUrls({
@@ -34,7 +35,7 @@ NewsTicker::NewsTicker(QObject * parent) : QObject(parent), mReady(false)
         }
         mFeedUrl = saved;
         mRefreshTimer = new QTimer(this);
-        mRefreshTimer->setInterval(NT_RFS_DEL);
+        mRefreshTimer->setInterval(NT_RFS_DEL_MS);
         connect(mRefreshTimer, &QTimer::timeout, this, &NewsTicker::fetch);
 }
 
@@ -87,7 +88,10 @@ void NewsTicker::fetch()
         QNetworkReply * reply = mNet->get(QNetworkRequest(QUrl(mFeedUrl)));
         connect(reply, &QNetworkReply::finished, this, [this, reply] {
                 reply->deleteLater();
-                if (reply->error() != QNetworkReply::NoError) { return; }
+                if (reply->error() != QNetworkReply::NoError) {
+                        QTimer::singleShot(NT_POLL_RETRY_DEL_MS, this, &NewsTicker::fetch);
+                        return;
+                }
                 parse(reply->readAll());
         });
 }

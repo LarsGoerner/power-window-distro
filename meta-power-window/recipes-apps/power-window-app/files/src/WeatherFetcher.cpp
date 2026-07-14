@@ -11,7 +11,7 @@
 #include "WeatherFetcher.hpp"
 
 #define POLL_DELAY_MS                   60000
-#define POLL_RETRY_DELAY_SECS           300
+#define POLL_RETRY_DELAY_SECS           30
 #define CUR_WETHER_POLL_DELAY_SECS      3600
 #define IP_API_URL              "http://ip-api.com/json/"
 #define OWM_CUR_WEATHER_API_TMP_URL "https://api.openweathermap.org/data/2.5/weather" \
